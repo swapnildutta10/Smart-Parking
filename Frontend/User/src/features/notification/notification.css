@@ -1,0 +1,73 @@
+.pn-notification-history ol {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pn-notification-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 16px;
+	border: 1px solid #b6dfc8;
+	border-radius: 8px;
+	color: #174b35;
+	background: #eaf8ef;
+}
+
+.pn-notification-item.is-overdue {
+	border-color: #f0c18e;
+	color: #75421c;
+	background: #fff4e7;
+}
+
+.pn-notification-item.is-parked {
+	border-color: #b9d5e8;
+	color: #24516d;
+	background: #edf6fc;
+}
+
+.pn-notification-item.is-cancelled {
+	border-color: #e8b8ac;
+	color: #763a2f;
+	background: #fff0ec;
+}
+
+.pn-notification-icon {
+	display: grid;
+	flex: 0 0 30px;
+	place-items: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	color: #fff;
+	background: #39845e;
+	font-weight: 700;
+}
+
+.pn-notification-item.is-overdue .pn-notification-icon { background: #bd692d; }
+.pn-notification-item.is-parked .pn-notification-icon { background: #3984b5; }
+.pn-notification-item.is-cancelled .pn-notification-icon { background: #a84d3c; }
+.pn-notification-copy { flex: 1; min-width: 0; }
+.pn-notification-copy strong { display: block; font-size: 13px; }
+.pn-notification-copy p { margin: 3px 0; font-size: 12px; line-height: 1.5; }
+.pn-notification-copy time { color: #62756b; font-size: 11px; }
+
+.pn-notification-item button {
+	flex: 0 0 auto;
+	padding: 8px 12px;
+	border: 1px solid currentColor;
+	border-radius: 6px;
+	color: inherit;
+	background: transparent;
+	font: inherit;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+@media (max-width: 560px) {
+	.pn-notification-item { align-items: flex-start; flex-wrap: wrap; }
+	.pn-notification-item button { margin-left: 42px; }
+}

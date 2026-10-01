@@ -1,0 +1,133 @@
+/* Payment module. Uses the dashboard theme variables (defined on .pn-user-dashboard). */
+
+/* ---------- Modals ---------- */
+.pn-pay-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: grid;
+	place-items: center;
+	padding: 16px;
+	overflow-y: auto;
+	background: rgba(8, 9, 15, 0.74);
+}
+.pn-pay-card {
+	width: min(520px, 100%);
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+	padding: 24px;
+	color: var(--dashboard-text, #f5f3fb);
+	border: 1px solid var(--dashboard-line, #3b3c4b);
+	border-radius: 16px;
+	background: var(--dashboard-surface, #1b1c29);
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.pn-pay-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.pn-pay-head h2 { margin: 0 0 4px; font-size: 1.25rem; color: #fff; }
+.pn-pay-head p { margin: 0; font-size: 0.85rem; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-close {
+	flex: none; width: 34px; height: 34px; font-size: 1.4rem; line-height: 1;
+	color: var(--dashboard-muted, #b7b7c5); border: 1px solid var(--dashboard-line, #3b3c4b);
+	border-radius: 50%; background: transparent; cursor: pointer;
+}
+.pn-pay-close:hover:not(:disabled) { color: #fff; border-color: var(--dashboard-cyan, #45f3ff); }
+
+/* ---------- Fee breakdown ---------- */
+.pn-pay-lines { margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; background: var(--dashboard-raised, #242532); }
+.pn-pay-lines > div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; font-size: 0.9rem; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-lines b { font-weight: 600; color: var(--dashboard-text, #f5f3fb); font-variant-numeric: tabular-nums; }
+.pn-pay-lines .is-discount b { color: #baf37d; }
+.pn-pay-lines .is-total { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--dashboard-line, #3b3c4b); font-size: 1.05rem; color: var(--dashboard-text, #f5f3fb); }
+.pn-pay-lines .is-total b { color: var(--dashboard-cyan, #45f3ff); }
+
+/* ---------- Promo ---------- */
+.pn-pay-promo { display: flex; gap: 8px; }
+.pn-pay-promo button, .pn-pay-secondary, .pn-pay-action {
+	padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer;
+	color: var(--dashboard-cyan, #45f3ff); border: 1px solid #168b92; border-radius: 999px; background: transparent;
+}
+.pn-pay-promo button:hover, .pn-pay-secondary:hover { color: #11121d; background: var(--dashboard-cyan, #45f3ff); }
+.pn-pay-promo-note { margin: 6px 0 0; font-size: 0.82rem; }
+.pn-pay-promo-note.is-ok { color: #baf37d; }
+.pn-pay-promo-note.is-bad { color: var(--dashboard-coral, #ff8f77); }
+
+/* ---------- Method picker + fields ---------- */
+.pn-pay-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 18px 0 14px; }
+.pn-pay-methods button {
+	padding: 10px 4px; font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+	color: var(--dashboard-muted, #b7b7c5); border: 1px solid var(--dashboard-line, #3b3c4b); border-radius: 10px; background: transparent;
+}
+.pn-pay-methods button.active { color: var(--dashboard-cyan, #45f3ff); border-color: var(--dashboard-cyan, #45f3ff); background: #173137; }
+.pn-pay-fields { display: grid; gap: 12px; }
+.pn-pay-fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.pn-pay-field { display: grid; gap: 6px; font-size: 0.85rem; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-card input, .pn-pay-card select {
+	width: 100%; padding: 10px 12px; font: inherit; color: var(--dashboard-text, #f5f3fb);
+	border: 1px solid var(--dashboard-line, #3b3c4b); border-radius: 10px; background: #14151f;
+}
+.pn-pay-card input:focus, .pn-pay-card select:focus { outline: 2px solid rgba(69, 243, 255, 0.35); border-color: var(--dashboard-cyan, #45f3ff); }
+.pn-pay-error { color: var(--dashboard-coral, #ff8f77); }
+.pn-pay-failure { margin: 14px 0 0; padding: 10px 12px; font-size: 0.88rem; color: #ffd6c8; border-left: 3px solid var(--dashboard-coral, #ff8f77); background: #35211f; }
+
+/* ---------- Buttons ---------- */
+.pn-pay-submit {
+	display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+	width: 100%; margin-top: 18px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer;
+	color: #11121d; border: 0; border-radius: 999px; background: var(--dashboard-cyan, #45f3ff);
+}
+.pn-pay-submit:hover:not(:disabled) { background: #83f7ff; }
+.pn-pay-submit:disabled, .pn-pay-close:disabled { opacity: 0.65; cursor: progress; }
+.pn-pay-demo-note { margin: 10px 0 0; text-align: center; font-size: 0.78rem; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-actions { display: flex; gap: 10px; margin-top: 18px; }
+.pn-pay-actions .pn-pay-submit { margin-top: 0; }
+.pn-pay-actions .pn-pay-secondary { flex: none; }
+.pn-pay-spinner {
+	width: 14px; height: 14px; border: 2px solid rgba(17, 18, 29, 0.3); border-top-color: #11121d; border-radius: 50%;
+	animation: pn-pay-spin 0.7s linear infinite;
+}
+@keyframes pn-pay-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pn-pay-spinner { animation-duration: 2.4s; } }
+
+/* ---------- Confirmation ---------- */
+.pn-pay-confirm { text-align: center; }
+.pn-pay-confirm h2 { margin: 12px 0 4px; color: #fff; }
+.pn-pay-confirm p { margin: 4px 0; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-confirm .pn-pay-confirm-amount { font-size: 2rem; font-weight: 700; color: #baf37d; }
+.pn-pay-check { display: inline-grid; place-items: center; width: 52px; height: 52px; font-size: 1.6rem; color: #11121d; border-radius: 50%; background: #baf37d; }
+.pn-pay-confirm-meta { margin: 18px 0 0; text-align: left; border-top: 1px solid var(--dashboard-line, #3b3c4b); }
+.pn-pay-confirm-meta div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--dashboard-line, #3b3c4b); font-size: 0.88rem; }
+.pn-pay-confirm-meta dt { color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-confirm-meta dd { margin: 0; text-align: right; word-break: break-word; }
+
+/* ---------- Receipt (light paper on the dark dashboard) ---------- */
+.pn-pay-receipt-wrap { width: min(480px, 100%); }
+.pn-pay-paper { padding: 22px; color: #1b1c29; border-radius: 6px; background: #fbfaf6; }
+.pn-pay-paper header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 1.2rem; }
+.pn-pay-stamp { padding: 2px 10px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1d7a4d; border: 2px solid #1d7a4d; border-radius: 4px; transform: rotate(-4deg); }
+.pn-pay-stamp.is-refunded { color: #a8661a; border-color: #a8661a; }
+.pn-pay-paper-rows { margin: 0 0 14px; }
+.pn-pay-paper-rows div { display: flex; justify-content: space-between; gap: 14px; padding: 6px 0; border-bottom: 1px dashed #c9c6bb; font-size: 0.85rem; }
+.pn-pay-paper-rows dt { color: #666; }
+.pn-pay-paper-rows dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; word-break: break-word; }
+.pn-pay-paper-rows .is-total { border-top: 2px solid #1b1c29; border-bottom: 0; font-size: 1.05rem; font-weight: 700; }
+.pn-pay-paper-rows .is-total dt { color: #1b1c29; }
+
+/* ---------- Payment history additions ---------- */
+.pn-pay-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0 6px; }
+.pn-pay-summary div { padding: 12px 14px; border: 1px solid var(--dashboard-line, #3b3c4b); border-radius: 12px; background: var(--dashboard-raised, #242532); }
+.pn-pay-summary small { display: block; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-summary strong { font-size: 1.3rem; color: var(--dashboard-text, #f5f3fb); }
+.pn-pay-section-title { margin: 20px 0 6px; font-size: 1rem; color: var(--dashboard-text, #f5f3fb); }
+.pn-pay-row-end { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.pn-pay-action { padding: 5px 14px; font-size: 0.82rem; color: #11121d; border-color: var(--dashboard-cyan, #45f3ff); background: var(--dashboard-cyan, #45f3ff); }
+.pn-pay-action.is-ghost { color: var(--dashboard-cyan, #45f3ff); background: transparent; border-color: #168b92; }
+.pn-pay-badge { padding: 1px 9px; font-size: 0.74rem; font-weight: 600; color: #baf37d; border-radius: 999px; background: #23301c; }
+.pn-pay-badge.is-refunded { color: #ffc857; background: #302a1d; }
+
+@media (max-width: 480px) {
+	.pn-pay-methods { grid-template-columns: repeat(2, 1fr); }
+	.pn-pay-actions { flex-wrap: wrap; }
+	.pn-pay-actions button { flex: 1 1 100%; }
+}
+
+@media print { .pn-pay-backdrop { position: static; background: none; } }

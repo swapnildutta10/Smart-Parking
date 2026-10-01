@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* =========================================================
+   ParkNova — modern color & type theme
+   Load this file LAST (after front_page.css, login-pages.css,
+  pro-redesign.css, home-modern.css) so it
+   wins the cascade without editing every component.
+   ========================================================= */
+
+:root,
+.pn-scope,
+.home-page {
+  /* dark ember-red palette — replaces the green/orange set, matching the
+     new front-page hero's near-black + red "showroom" theme sitewide */
+  --forest: #0a0a0c;
+  --green: #e8394c;
+  --green-deep: #a41f30;
+  --mint: #ffb4bd;
+  --clay: #ff7a59;
+  --cream: #f5f1ee;
+  --ink: #f5f1ee;
+  --muted: #b7abae;
+
+  --hp-forest: #0a0a0c;
+  --hp-green: #e8394c;
+  --hp-mint: #ffb4bd;
+  --hp-clay: #ff7a59;
+  --hp-cream: #f5f1ee;
+  --hp-ink: #f5f1ee;
+  --hp-muted: #b7abae;
+}
+
+/* ---------------- Typography ---------------- */
+body,
+.pn-scope,
+.home-page {
+  font-family: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+h1, h2, h3, h4,
+.brand, .mobile-brand,
+[class*="-brand"],
+.pn-ticket-slot,
+.eyebrow, .pn-eyebrow {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+}
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.eyebrow, .pn-eyebrow, .section-kicker, .hero-kicker,
+.pn-dash-kicker, .pn-kicker, .module-label {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+/* ---------------- Buttons: literal-color overrides ---------------- */
+/* (covers classes that were written with hardcoded hex rather than vars) */
+.primary-button,
+.pn-button-primary,
+.pn-btn-primary,
+.booking-bar button,
+.nav-action,
+.pn-admin-submit,
+.admin-login-button {
+  background: var(--green) !important;
+  box-shadow: 0 4px 0 var(--green-deep) !important;
+}
+.primary-button:hover,
+.pn-button-primary:hover,
+.pn-btn-primary:hover,
+.booking-bar button:hover,
+.nav-action:hover {
+  background: #ff5c52 !important;
+}
+.popular-plan button,
+.popular-plan {
+  border-color: var(--green) !important;
+}
+.popular-plan button {
+  background: var(--green) !important;
+}
+.popular-plan span {
+  background: var(--clay) !important;
+}
+
+/* Accent (coral) surfaces */
+.feature-strip article:nth-child(2) .feature-icon,
+.admin-module-card .module-icon,
+.pn-admin-mark,
+.admin-login-icon,
+.pn-status-tag.pending,
+.admin-switch-prompt a,
+.pn-admin-link a {
+  background: var(--clay) !important;
+  color: #fff !important;
+}
+.forgot-link, .pn-link {
+  color: var(--green) !important;
+}
+
+/* Dark surfaces (nav, admin portal, dashboard sidebar, footer) */
+.home-nav,
+.home-footer,
+.copyright,
+.home-utility,
+.pn-admin-login,
+.pn-dash-sidebar,
+.admin-login-page,
+.admin-login-card,
+.quote-section {
+  background-color: var(--forest) !important;
+}
+.pn-dash-nav button.active,
+.pn-dash-nav button:hover {
+  background: #123326 !important;
+}
+
+/* Hero overlay tuned to the new dark tone */
+.hero-overlay {
+  background: linear-gradient(
+    100deg,
+    rgba(11, 31, 23, 0.94) 0%,
+    rgba(11, 31, 23, 0.74) 42%,
+    rgba(11, 31, 23, 0.42) 100%
+  ) !important;
+}
+.pn-login-visual {
+  background-color: #11121d !important;
+  background-image: radial-gradient(rgba(157, 140, 255, 0.12) 0.8px, transparent 0.8px) !important;
+  background-size: 16px 16px !important;
+}
+.pn-banner {
+  background: linear-gradient(120deg, #0e3524, #12633f) !important;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Live/pulse accents */
+.status-dot, .pn-status-dot, .pn-map-dot.is-live {
+  background: var(--mint) !important;
+}
+.hero-trust-row strong, .pn-login-stats strong {
+  color: inherit;
+}
+
+/* Softer, slightly larger radii read as more "modern SaaS" */
+.primary-button, .pn-button-primary, .pn-btn-primary, .google-button,
+.pn-button-google, .form-control, .pn-field input, input, select,
+.booking-bar, .feature-strip article, .why-grid article,
+.quote-grid article, .pricing-grid article, .pn-stat-card, .pn-data-card {
+  border-radius: 12px;
+}
