@@ -1,3 +1,4 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 import ParkingSpotDetails from "../parkingSpot/ParkingSpotDetails";
 import ScrollJourney from "./ScrollJourney";
@@ -10,12 +11,12 @@ function UserHome({ onRegister, onLogin, onLogout, onFindSpot, initialView = "ho
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
   const [priceFilter, setPriceFilter] = React.useState("all");
   const [parkingSlots] = React.useState([
-    { id: "A-12", vehicle: "Car", location: "Brainware University Main Gate", area: "University district", rate: "$13/day", available: 4 },
-    { id: "B-07", vehicle: "Two wheeler", location: "Brainware University Student Parking", area: "University district", rate: "$4/day", available: 12 },
-    { id: "C-18", vehicle: "SUV / Van", location: "Barasat Station Parking", area: "Barasat central", rate: "$18/day", available: 2 },
-    { id: "E-03", vehicle: "EV", location: "Champadali More Parking", area: "Champadali", rate: "$16/day", available: 3 },
-    { id: "D-21", vehicle: "Car", location: "Kazipara Road Parking", area: "Kazipara", rate: "$11/day", available: 7 },
-    { id: "B-14", vehicle: "Two wheeler", location: "Barasat Station Parking", area: "Barasat central", rate: "$5/day", available: 8 },
+    { id: "A-12", vehicle: "Car", location: "Brainware University Main Gate", area: "University district", rate: "₹13/day", available: 4 },
+    { id: "B-07", vehicle: "Two wheeler", location: "Brainware University Student Parking", area: "University district", rate: "₹4/day", available: 12 },
+    { id: "C-18", vehicle: "SUV / Van", location: "Barasat Station Parking", area: "Barasat central", rate: "₹18/day", available: 2 },
+    { id: "E-03", vehicle: "EV", location: "Champadali More Parking", area: "Champadali", rate: "₹16/day", available: 3 },
+    { id: "D-21", vehicle: "Car", location: "Kazipara Road Parking", area: "Kazipara", rate: "₹11/day", available: 7 },
+    { id: "B-14", vehicle: "Two wheeler", location: "Barasat Station Parking", area: "Barasat central", rate: "₹5/day", available: 8 },
   ]);
 
   const filteredSlots = parkingSlots.filter((slot) => {
@@ -56,11 +57,11 @@ function UserHome({ onRegister, onLogin, onLogout, onFindSpot, initialView = "ho
     <div className="pn-scope pn-home">
       <header className="pn-home-header">
         <a
-          className="pn-home-brand"
+          className="pn-home-brand pn-brand-link"
           href="#user-home"
           onClick={() => setActiveView("home")}
         >
-          <span>P</span> ParkNova
+          <BrandLogo />
         </a>
         <nav className="pn-home-nav" aria-label="User portal navigation">
           <button
@@ -155,7 +156,7 @@ function UserHome({ onRegister, onLogin, onLogout, onFindSpot, initialView = "ho
               </div>
               <div>
                 <span>Rate</span>
-                <strong>$13/day</strong>
+                <strong>₹13/day</strong>
               </div>
             </div>
           </div>
@@ -208,9 +209,9 @@ function UserHome({ onRegister, onLogin, onLogout, onFindSpot, initialView = "ho
               <span>Daily price</span>
               <select value={priceFilter} onChange={(event) => setPriceFilter(event.target.value)}>
                 <option value="all">Any price</option>
-                <option value="under-10">Under $10</option>
-                <option value="10-15">$10 - $15</option>
-                <option value="over-15">Over $15</option>
+                <option value="under-10">Under ₹10</option>
+                <option value="10-15">₹10 - ₹15</option>
+                <option value="over-15">Over ₹15</option>
               </select>
             </label>
             {hasActiveFilters && (

@@ -1,0 +1,68 @@
+/* Shared dark surfaces; component layouts and semantic status colors stay intact. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ui-accent: #ef4059; --ui-accent-dark: #bd263e;
+  --dashboard-cyan: #ff6178;
+  --bs-body-bg: #09090b; --bs-body-color: #f4f1f2;
+  --bs-secondary-color: #b3aaae; --bs-border-color: #303034;
+  --ui-ink: #f4f1f2; --ui-muted: #b3aaae; --ui-soft: #09090b;
+  --ui-surface: #171719; --ui-line: #303034;
+}
+[data-theme="dark"] body { background: #09090b; color: #f4f1f2; }
+[data-theme="dark"] :is(.home-page, .pn-scope, .pn-user-dashboard, .user-portal, .module-page) {
+  --text: #f4f1f2; --ink: #f4f1f2; --muted: #b3aaae;
+  --cream: #09090b; --forest: #09090b;
+  --dashboard-bg: #09090b; --dashboard-text: #f4f1f2;
+  --dashboard-surface: #171719; --dashboard-raised: #222225;
+  --dashboard-line: #303034; --dashboard-muted: #b3aaae;
+  color: #f4f1f2; background-color: #09090b;
+}
+[data-theme="dark"] :is(.home-nav, .pn-home-header, .user-portal-header, .home-footer, .home-utility) {
+  background: #111113 !important; border-color: #303034; color: #cfc5ca;
+}
+[data-theme="dark"] :is(.why-section, .pricing-section, .quote-section, .section-light, .home-parking-gallery, .pn-home, .pn-slots-panel, .pn-login-form-side) {
+  background: #09090b; color: #f4f1f2;
+}
+[data-theme="dark"] :is(.feature-strip article, .why-grid article, .quote-grid article, .pricing-grid article, .home-parking-photo-card, .module-card:not(.admin-module-card), .user-profile-details, .pn-login-form-wrap, .pn-user-panel, .pn-user-stat-card) {
+  background: #171719; border-color: #303034; color: #f4f1f2;
+  box-shadow: 0 12px 32px #00000024;
+}
+[data-theme="dark"] :is(.home-page, .user-portal, .module-page) :is(h1,h2,h3,h4) { color: #fff6f8; }
+[data-theme="dark"] :is(.home-page, .user-portal, .module-page) :is(.section-heading > p, .feature-strip p, .why-grid p, .quote-grid p, .pricing-grid p, .hero-copy) { color: #bdb1b7; }
+[data-theme="dark"] :is(.home-brand, .home-links a, .nav-login, .user-portal-brand) { color: #f4f1f2; }
+[data-theme="dark"] .booking-bar { background: #171719f2; border: 1px solid #3b3539; box-shadow: 0 20px 48px #0005; }
+[data-theme="dark"] .booking-bar label { background: #171719; border-color: #3b3539; }
+[data-theme="dark"] :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea, .form-control, .pn-google-preview-button) {
+  color: #f4f1f2; background-color: #111113; border-color: #3b3539;
+}
+[data-theme="dark"] :is(input,textarea)::placeholder { color: #a99ba2; opacity: 1; }
+[data-theme="dark"] select option { color: #f4f1f2; background: #171719; }
+[data-theme="dark"] :is(input,select,textarea):focus-visible { outline: 2px solid #ff6178; outline-offset: 2px; }
+[data-theme="dark"] .pn-google-preview-button:hover { background: #222225; border-color: #a94b5c; }
+[data-theme="dark"] .text-secondary { color: #b3aaae !important; }
+[data-theme="dark"] .table { --bs-table-bg: #171719; --bs-table-color: #f4f1f2; --bs-table-border-color: #303034; --bs-table-striped-bg: #222225; }
+[data-theme="dark"] .home-hero { background-color: #09090b; }
+[data-theme="dark"] .hero-overlay { background: linear-gradient(100deg,#09090be8,#111113a6,#09090bcf); }
+[data-theme="dark"] .feature-strip { border-color: #303034; }
+[data-theme="dark"] .home-page a:focus-visible { outline-color: #ff6178; }
+@media print { :root[data-theme="dark"] { color-scheme: light; } }
+
+/* Red accents on neutral black surfaces, with status and provider colors preserved. */
+[data-theme="dark"] :is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page) {
+  --brand: #ef4059; --brand-soft: #ef40591a; --green: #ef4059; --green-deep: #bd263e;
+  --mint: #ffb4bf; --hp-green: #ef4059; --hp-mint: #ffb4bf;
+  --ui-accent: #ef4059; --ui-accent-dark: #bd263e; --dashboard-cyan: #ff6178;
+}
+[data-theme="dark"] :is(.home-nav,.home-utility,.home-footer,.pn-user-sidebar,.pn-home-header) { background: #0e0e10 !important; }
+[data-theme="dark"] :is(.booking-bar button,.hero-button,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost)) {
+  background: #df304b !important; color: #fff; border-color: #ef4059; box-shadow: 0 6px 20px #df304b20;
+}
+[data-theme="dark"] :is(.booking-bar button,.hero-button,.pn-user-primary-action):hover { background: #c92540 !important; }
+[data-theme="dark"] :is(.hero-kicker,.section-kicker,.pn-kicker,.pn-dash-kicker,.home-parking-photo-copy a) { color: #ff8fa1; }
+[data-theme="dark"] :is(.home-brand::before,.pn-home-brand span,.pn-user-brand > span) { color: #fff; background: #df304b; }
+[data-theme="dark"] .home-links a:hover { color: #ff8fa1; }
+[data-theme="dark"] .nav-login { background: #ef405914; border: 1px solid #ef405955; color: #ffd4dc; }
+[data-theme="dark"] .pn-user-welcome-banner { background: linear-gradient(120deg,#29151c,#171719); border: 1px solid #60303d; }
+[data-theme="dark"] .pn-pay-methods button.active { color: #ff8fa1; border-color: #ef4059; background: #ef405914; }
+[data-theme="dark"] .pn-pay-checkout { border-color: #ef405938; }
+[data-theme="dark"] .pn-user-sidebar button.active { color: #ffd4dc; background: #ef40591f; }

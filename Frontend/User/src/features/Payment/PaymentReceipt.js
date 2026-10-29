@@ -1,3 +1,4 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 import "../../styles/payment.css";
 import { downloadReceipt, getReceiptSections, printReceipt } from "./receiptUtils";
@@ -16,7 +17,7 @@ function PaymentReceipt({ payment, onClose }) {
       <section className="pn-pay-card pn-pay-receipt-wrap" role="dialog" aria-modal="true" aria-label="Payment receipt">
         <article className="pn-pay-paper">
           <header>
-            <strong>ParkNova</strong>
+            <BrandLogo />
             <span className={`pn-pay-stamp${payment.status === "refunded" ? " is-refunded" : ""}`}>
               {payment.status === "refunded" ? "Refunded" : "Paid"}
             </span>

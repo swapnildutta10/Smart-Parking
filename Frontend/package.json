@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "start:api": "npm --prefix ../Backend start",
+    "test:auth": "node --env-file=../Backend/.env server/check-auth.mjs",
+    "test:payments": "node --env-file=../Backend/.env server/check-booking-payments.mjs",
+    "test:parking": "node --env-file=../Backend/.env server/check-parking-admin.mjs",
+    "test:catalog": "node --env-file=../Backend/.env server/check-catalog.mjs",
+    "test:saved-locations": "node --env-file=../Backend/.env server/check-saved-locations.mjs",
+    "test:notifications": "node --env-file=../Backend/.env server/check-notifications.mjs",
+    "test:support": "node --env-file=../Backend/.env server/check-support.mjs",
+    "test:reporting": "node --env-file=../Backend/.env server/check-reporting.mjs",
+    "test:user-dashboard": "node --env-file=../Backend/.env server/check-user-dashboard.mjs",
+    "test:profile": "node --env-file=../Backend/.env server/check-profile.mjs",
+    "test:availability": "node --env-file=../Backend/.env server/check-availability.mjs",
+    "test:live-events": "node --env-file=../Backend/.env server/check-live-events.mjs",
+    "test:captcha": "node --env-file=../Backend/.env server/check-captcha.mjs",
+    "db:check": "node --env-file=.env server/check-mongodb.mjs"
+  },
+  "dependencies": {
+    "mongodb": "^7.7.0"
+  }
+}

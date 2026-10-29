@@ -1,19 +1,11 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 import ParkingSpotDetails from "./ParkingSpotDetails";
-import SelectDateTime from "../Booking system/SelectDateTime";
-import BookingConfirmation from "../Booking system/BookingConfirmation";
-import BookingHistory from "../Booking system/BookingHistory";
+import SelectDateTime from "../booking/SelectDateTime";
+import BookingConfirmation from "../booking/BookingConfirmation";
+import BookingHistory from "../booking/BookingHistory";
 
-const parkingSlots = [
-  { id: "A-12", vehicle: "Car", location: "Brainware University Main Gate", area: "University district", rate: "$13/day", available: 4 },
-  { id: "B-07", vehicle: "Two wheeler", location: "Brainware University Student Parking", area: "University district", rate: "$4/day", available: 12 },
-  { id: "C-18", vehicle: "SUV / Van", location: "Barasat Station Parking", area: "Barasat central", rate: "$18/day", available: 2 },
-  { id: "E-03", vehicle: "EV", location: "Champadali More Parking", area: "Champadali", rate: "$16/day", available: 3 },
-  { id: "D-21", vehicle: "Car", location: "Kazipara Road Parking", area: "Kazipara", rate: "$11/day", available: 7 },
-  { id: "B-14", vehicle: "Two wheeler", location: "Barasat Station Parking", area: "Barasat central", rate: "$5/day", available: 8 },
-];
-
-function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, onCancelBooking }) {
+function ParkingDirectory({ parkingSlots = [], parkingError, parkingLoading, onRetryParking, onBack, onLogin, onLogout, bookings, onAddBooking, onCancelBooking }) {
   // "directory" is the search/browse view; "bookings" swaps in the booking
   // history panel without leaving this screen.
   const [view, setView] = React.useState("directory");
@@ -25,8 +17,8 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
   const [bookingSpot, setBookingSpot] = React.useState(null);
   const [confirmedBooking, setConfirmedBooking] = React.useState(null);
 
-  function handleConfirmBooking(draft) {
-    const booking = onAddBooking(draft);
+  async function handleConfirmBooking(draft) {
+    const booking = await onAddBooking(draft);
     setBookingSpot(null);
     setConfirmedBooking(booking);
   }
@@ -38,7 +30,7 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
       || (availabilityFilter === "available" && slot.available > 0)
       || (availabilityFilter === "limited" && slot.available > 0 && slot.available <= 4)
       || (availabilityFilter === "full" && slot.available === 0);
-    const rate = Number.parseInt(slot.rate, 10);
+    const rate = Number(slot.rate);
     const matchesPrice = priceFilter === "all"
       || (priceFilter === "under-10" && rate < 10)
       || (priceFilter === "10-15" && rate >= 10 && rate <= 15)
@@ -59,8 +51,8 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
   return (
     <div className="pn-scope pn-home">
       <header className="pn-home-header">
-        <div className="pn-home-brand">
-          <span>P</span> ParkNova
+        <div className="pn-home-brand pn-brand-link">
+          <BrandLogo />
         </div>
         <nav className="pn-home-nav" aria-label="Parking directory navigation">
           <button type="button" onClick={onBack}>Dashboard</button>
@@ -92,7 +84,7 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
           <div className="col-lg-8 col-md-10">
             <p className="pn-kicker mb-3">Parking directory</p>
             <h1 className="display-5 fw-semibold mb-2">Find a space that fits.</h1>
-            <p className="mb-0 text-secondary">Search by place, area, availability, or your daily budget.</p>
+            <p className="mb-0 text-secondary">Search by place, area, availability now, or your hourly budget.</p>
           </div>
         </div>
 
@@ -115,12 +107,12 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
             </select>
           </label>
           <label className="pn-filter-field">
-            <span>Daily price</span>
+            <span>Hourly price</span>
             <select value={priceFilter} onChange={(event) => setPriceFilter(event.target.value)}>
               <option value="all">Any price</option>
-              <option value="under-10">Under $10</option>
-              <option value="10-15">$10 - $15</option>
-              <option value="over-15">Over $15</option>
+              <option value="under-10">Under ₹10</option>
+              <option value="10-15">₹10 - ₹15</option>
+              <option value="over-15">Over ₹15</option>
             </select>
           </label>
           {hasActiveFilters && <button className="pn-clear-filters" type="button" onClick={clearFilters}>Clear filters</button>}
@@ -130,6 +122,8 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
           <strong>{filteredSlots.length} {filteredSlots.length === 1 ? "spot" : "spots"} found</strong>
           <span>{hasActiveFilters ? "Matching your preferences" : "All listed locations"}</span>
         </div>
+        {parkingLoading && <p role="status">Loading parking locations…</p>}
+        {parkingError && <p role="alert">{parkingError} <button type="button" onClick={onRetryParking}>Retry</button></p>}
 
         {filteredSlots.length > 0 ? (
           <div className="row g-4">
@@ -149,7 +143,7 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
                       </strong>
                     </p>
                     <div className="pn-slot-card-bottom d-flex justify-content-between align-items-center pt-3">
-                      <strong className="text-dark fs-5 fw-bold">{slot.rate}</strong>
+                      <strong className="text-dark fs-5 fw-bold">₹{slot.rate}/hour</strong>
                       <div className="pn-slot-card-actions d-flex gap-2">
                         <button type="button" className="btn btn-outline-success rounded-pill px-3 py-2 fw-bold" onClick={() => setSelectedSpot(slot)}>
                           View spot
@@ -157,7 +151,6 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
                         <button
                           type="button"
                           className="btn btn-success rounded-pill px-3 py-2 fw-bold pn-btn-book"
-                          disabled={slot.available === 0}
                           onClick={() => setBookingSpot(slot)}
                         >
                           <span aria-hidden="true">🎟</span> Book now
@@ -181,7 +174,7 @@ function ParkingDirectory({ onBack, onLogin, onLogout, bookings, onAddBooking, o
         )}
       </main>
 
-      <ParkingSpotDetails spot={selectedSpot} onClose={() => setSelectedSpot(null)} onReserve={onLogin} />
+      <ParkingSpotDetails spot={selectedSpot} onClose={() => setSelectedSpot(null)} onReserve={() => { setBookingSpot(selectedSpot); setSelectedSpot(null); }} />
 
       <SelectDateTime
         spot={bookingSpot}

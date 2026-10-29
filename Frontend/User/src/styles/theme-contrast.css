@@ -1,0 +1,196 @@
+/* Final text contrast layer. No spacing, geometry, or content changes. */
+:root[data-theme="dark"] { --theme-ink: #fff; --theme-muted: #c6c6cd; --theme-field: #111113; --theme-surface: #171719; --theme-line: #3b3539; }
+:root[data-theme="light"] { --theme-ink: #111; --theme-muted: #444; --theme-field: #fff; --theme-surface: #fff; --theme-line: #d0d0d5; }
+:root:is([data-theme="dark"],[data-theme="light"]) body { color: var(--theme-ink); }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page,.pn-pay-backdrop) {
+  --dashboard-text: var(--theme-ink); --dashboard-muted: var(--theme-muted);
+  --ui-ink: var(--theme-ink); --ui-muted: var(--theme-muted);
+  --text: var(--theme-ink); --ink: var(--theme-ink); --muted: var(--theme-muted);
+  color: var(--theme-ink) !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(div,section,article,header,footer,nav,h1,h2,h3,h4,h5,h6,p,label,li,td,th,small,strong,b,em,a,button,input,select,textarea,legend,summary,caption,dt,dd,span,.text-secondary,.text-muted) {
+  color: var(--theme-ink) !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(input,textarea)::placeholder { color: var(--theme-muted) !important; opacity: 1; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea) { background-color: var(--theme-field) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-card,.pn-pay-checkout,.pn-login-form-wrap,.pn-user-panel,.pn-user-stat-card,.user-profile-details) { background-color: var(--theme-surface); border-color: var(--theme-line); }
+/* Filled action buttons and image badges need a contrasting white label in both modes. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.booking-bar button,.hero-button,.nav-login,.pn-button-primary,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost),.home-parking-photo-label) {
+  color: #fff !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.booking-bar button,.hero-button,.nav-login,.pn-button-primary,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost)) :is(span,strong,b,small) { color: #fff !important; }
+:root[data-theme="light"] :is(.pn-user-sidebar,.pn-home-header,.pn-user-welcome-banner,.pn-login-form-side,.pn-user-dashboard-topbar,.home-footer) { background: #f5f5f6 !important; }
+:root[data-theme="light"] :is(.pn-pay-lines,.pn-pay-summary div,.pn-pay-methods button,.pn-google-preview-button) { background-color: #f5f5f6; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-brand,.pn-home-brand,.home-brand)::before { color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-robot-bubble { color: var(--theme-ink) !important; }
+
+/* Remove the legacy blue/violet robot backdrop in both theme states. */
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login {
+  background: radial-gradient(ellipse at 50% 20%,#e509190a,transparent 60%),#090909 !important;
+}
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login .pn-login-visual {
+  background: radial-gradient(#ed233c22 .8px,transparent .8px),#0b0b0b !important;
+  background-size: 16px 16px,auto !important;
+}
+:root[data-theme="light"] .pn-modern-login.pn-robot-login { background: #fafafa !important; }
+:root[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-visual {
+  background: radial-gradient(#11111116 .8px,transparent .8px),#fafafa !important;
+  background-size: 16px 16px,auto !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-robot-scene { background: transparent !important; }
+
+/* Contrast exceptions for dark filled controls and circular feature icons. */
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button {
+  color: #fff !important; background: #19191c !important; border-color: #19191c;
+}
+:root[data-theme="dark"] .home-page .pricing-grid article button { background: #df1023 !important; border-color: #df1023; }
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page :is(.feature-icon,.why-grid article > span,.popular-plan > span) {
+  color: #fff !important; background: #19191c !important;
+}
+:root[data-theme="dark"] .home-page :is(.feature-icon,.why-grid article > span,.popular-plan > span) { background: #c80d20 !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button:hover {
+  color: #fff !important; background: #3b3b40 !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button:focus-visible { outline: 2px solid var(--theme-ink); outline-offset: 3px; }
+
+/* Refined controls: clear silhouettes, subtle depth and restrained movement. */
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page :is(.pricing-grid article button,.booking-bar button,.nav-login,.hero-button) {
+  min-height: 46px; border-radius: 12px; font-weight: 600; letter-spacing: .02em;
+  transition: background .2s ease,box-shadow .2s ease,transform .2s ease,border-color .2s ease;
+}
+:root[data-theme="light"] .home-page .pricing-grid article button {
+  background: linear-gradient(145deg,#fff,#f3f3f5) !important; color: #171719 !important;
+  border: 1px solid #d6d6db; box-shadow: 0 2px 3px #00000004,0 5px 12px #00000006,inset 0 1px 0 #fff;
+  display: flex; align-items: center; justify-content: space-between; padding: 12px 18px;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button::after {
+  content: "\2197"; font-size: 19px; font-weight: 400; line-height: 1;
+  transition: transform .2s ease;
+}
+:root[data-theme="light"] .home-page .pricing-grid .popular-plan button {
+  background: linear-gradient(135deg,#34343a,#18181c) !important; color: #fff !important;
+  border-color: #33333a; box-shadow: 0 5px 14px #00000018,inset 0 1px 0 #ffffff20;
+}
+:root[data-theme="dark"] .home-page .pricing-grid article button {
+  background: linear-gradient(145deg,#292125,#191719) !important; border: 1px solid #65404a;
+  box-shadow: inset 0 1px 0 #ffffff0c,0 4px 12px #0002;
+  display: flex; align-items: center; justify-content: space-between; padding: 12px 18px;
+}
+:root[data-theme="dark"] .home-page .pricing-grid .popular-plan button {
+  background: linear-gradient(135deg,#ef3045,#cb0c22) !important; border-color: #f44357;
+  box-shadow: 0 5px 16px #d6102525,inset 0 1px 0 #ffffff25;
+}
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme="light"] .home-page .pricing-grid article button:hover { background: #eaeaee !important; color: #111 !important; border-color: #b1b1bb; box-shadow: 0 6px 16px #00000010; }
+  :root[data-theme="light"] .home-page .pricing-grid .popular-plan button:hover { background: #36363e !important; color: #fff !important; }
+  :root[data-theme="dark"] .home-page .pricing-grid article button:hover { background: #37262c !important; border-color: #df5268; }
+  :root[data-theme="dark"] .home-page .pricing-grid .popular-plan button:hover { background: #ef3045 !important; }
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button:hover::after { transform: translate(2px,-2px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button,
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button::after { transition: none; }
+}
+
+/* Consistent black pricing buttons, retaining the rounded modern control shape. */
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button,
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid .popular-plan button {
+  background: linear-gradient(145deg,#303034,#171719) !important;
+  color: #fff !important; border: 1px solid #36363b;
+  box-shadow: 0 4px 12px #00000015,inset 0 1px 0 #ffffff16;
+}
+@media (hover:hover) and (pointer:fine) {
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid article button:hover,
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .pricing-grid .popular-plan button:hover {
+    background: #38383e !important; color: #fff !important; border-color: #505058;
+  }
+}
+
+/* Quiet text navigation; only the account action is filled. */
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a {
+  position: relative; display: inline-flex; align-items: center;
+  min-height: 42px; padding: 10px 0; border: 0; border-radius: 0;
+  color: var(--theme-ink) !important; background: transparent !important;
+  box-shadow: none; text-decoration: none;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 3px; height: 2px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform .2s ease;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a[aria-current="location"]::after { transform: scaleX(1); }
+:root[data-theme="dark"] .home-page .home-links a::after { background: #ed233c; }
+:root[data-theme="light"] .home-page .nav-login { background: #19191c !important; border-color: #19191c; color: #fff !important; }
+:root[data-theme="dark"] .home-page .nav-login { background: #df1023 !important; border-color: #df1023; color: #fff !important; }
+@media (hover:hover) and (pointer:fine) {
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a:hover::after { transform: scaleX(1); }
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a:focus-visible { outline: 2px solid var(--theme-ink); outline-offset: 4px; }
+@media (prefers-reduced-motion:reduce) {
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links a::after { transition: none; }
+}
+
+/* Booking dialogs render outside the dashboard; give them explicit theme surfaces. */
+:root[data-theme="dark"] .pn-spot-modal .pn-spot-modal-card {
+  background: linear-gradient(155deg,#281015,#121214 80%) !important;
+  border-color: #61303a; color: #fff !important;
+}
+:root[data-theme="light"] .pn-spot-modal .pn-spot-modal-card {
+  background: #fff !important; border-color: #d6d6db; color: #111 !important;
+}
+:root[data-theme="dark"] .pn-spot-modal :is(.pn-spot-detail-grid > span,.pn-booking-summary-chip) { background: #21191d !important; border-color: #53313a; }
+:root[data-theme="light"] .pn-spot-modal :is(.pn-spot-detail-grid > span,.pn-booking-summary-chip) { background: #f4f4f6 !important; border-color: #d6d6db; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-booking-cost-row { background: #19191c !important; border-color: #38383d; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-booking-cost-row :is(span,strong,b,small,div) { color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-slot-id { background: #19191c !important; color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-btn-primary,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-btn-primary span { color: #fff !important; }
+:root[data-theme="dark"] .pn-spot-modal .pn-btn-primary { background: #df1023 !important; border-color: #df1023; }
+:root[data-theme="light"] .pn-spot-modal .pn-btn-primary { background: #19191c !important; border-color: #19191c; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-spot-modal-close { background: var(--theme-surface) !important; border-color: var(--theme-line); }
+
+/* Booking/payment surface audit: every text-bearing surface follows its theme. */
+:root[data-theme="dark"] { --transaction-surface: #191417; --transaction-raised: #251b20; --transaction-line: #59343f; --transaction-accent: #df1023; }
+:root[data-theme="light"] { --transaction-surface: #fff; --transaction-raised: #f4f4f6; --transaction-line: #d6d6db; --transaction-accent: #19191c; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-backdrop,.pn-spot-modal,.pn-bookings-panel) {
+  --dashboard-text: var(--theme-ink); --dashboard-muted: var(--theme-muted);
+  --dashboard-surface: var(--transaction-surface); --dashboard-raised: var(--transaction-raised); --dashboard-line: var(--transaction-line);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-card,.pn-spot-modal-card,.pn-booking-item) {
+  background: var(--transaction-surface) !important; border-color: var(--transaction-line);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-amount-banner,.pn-pay-lines,.pn-pay-summary > div,.pn-booking-ref,.pn-booking-cancel-confirm,.pn-booking-item-id,.pn-booking-item-chevron,.pn-spot-detail-grid > span,.pn-booking-status-badge,.pn-pay-badge,.pn-pay-failure) {
+  background: var(--transaction-raised) !important; border-color: var(--transaction-line);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-methods button,.pn-pay-upi-app,.pn-pay-secondary,.pn-btn-secondary) {
+  background: var(--transaction-surface) !important; border-color: var(--transaction-line);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-methods button.active,.pn-pay-upi-app.active) {
+  background: var(--transaction-raised) !important; border-color: var(--transaction-accent);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-booking-tabs button.active,.pn-btn-danger,.pn-booking-item-id,.pn-pay-submit) {
+  background: var(--transaction-accent) !important; color: #fff !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-booking-tabs button.active,.pn-btn-danger) span { color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-check { background: var(--transaction-raised) !important; color: var(--theme-ink) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-app-mark { color: #fff !important; }
+/* Receipt paper deliberately remains light in both modes, including when printed. */
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper :is(header,strong,span,dl,div,dt,dd,b,small,p) {
+  color: #19191c !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper { background: #fbfaf6 !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-stamp { border-color: #3e5146; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-card .pn-pay-secondary:hover { background: var(--transaction-raised) !important; }
+
+/* Availability banners retain readable status contrast independently of page text. */
+:root[data-theme="dark"] .pn-spot-modal .pn-availability-banner { background: #172b21 !important; border: 1px solid #385e48; }
+:root[data-theme="light"] .pn-spot-modal .pn-availability-banner { background: #e8f4eb !important; border: 1px solid #bed9c5; }
+:root[data-theme="dark"] .pn-spot-modal .pn-availability-banner,
+:root[data-theme="dark"] .pn-spot-modal .pn-availability-banner :is(span,strong,b,small) { color: #eaffef !important; }
+:root[data-theme="light"] .pn-spot-modal .pn-availability-banner,
+:root[data-theme="light"] .pn-spot-modal .pn-availability-banner :is(span,strong,b,small) { color: #173d26 !important; }
+:root[data-theme="dark"] .pn-spot-modal .pn-availability-banner.is-full { background: #351a21 !important; border-color: #78404d; }
+:root[data-theme="light"] .pn-spot-modal .pn-availability-banner.is-full { background: #fcebed !important; border-color: #e6bbc3; color: #76192b !important; }
+:root[data-theme="light"] .pn-spot-modal .pn-availability-banner.is-full :is(span,strong,b,small) { color: #76192b !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-availability-dot { background: currentColor; }

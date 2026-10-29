@@ -1,0 +1,10 @@
+.pn-captcha { display: grid; gap: 11px; margin: 16px 0; padding: 15px; border: 1px solid #84918d44; border-radius: 12px; background: #71948408; }
+.pn-captcha-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pn-captcha-heading strong { font-size: 13px; }.pn-captcha-heading span { font-size: 10px; opacity: .65; }
+.pn-captcha-image-row { display: flex; align-items: stretch; gap: 10px; }
+.pn-captcha-picture { min-height: 66px; min-width: 0; flex: 1; display: grid; place-items: center; overflow: hidden; background: #eef5f1; color: #25372d; border: 1px solid #acbfb4; border-radius: 8px; }
+.pn-captcha-picture img { display: block; max-width: 100%; object-fit: contain; }
+.pn-captcha-refresh { display: grid; place-content: center; gap: 3px; flex: 0 0 70px; border: 1px solid #84918d55; border-radius: 8px; background: #84918d0c; color: inherit; font-size: 24px; cursor: pointer; }
+.pn-captcha-refresh span { font-size: 9px; }.pn-captcha-refresh:disabled { opacity: .5; cursor: wait; }
+.pn-captcha label { display: grid; gap: 7px; font-size: 12px; }.pn-captcha input { width: 100%; padding: 11px 12px; border: 1px solid #84918d55; border-radius: 8px; font: inherit; letter-spacing: .16em; color: inherit; background: transparent; }
+.pn-captcha input:focus { outline: 2px solid #6bbf9e; outline-offset: 2px; }.pn-captcha p { margin: 0; font-size: 12px; }

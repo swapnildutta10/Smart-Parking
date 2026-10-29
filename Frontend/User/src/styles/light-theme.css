@@ -1,0 +1,154 @@
+/* Mirrors the dark theme layout with white/black surfaces and accents. */
+/* Shared dark surfaces; component layouts and semantic status colors stay intact. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ui-accent: #202024; --ui-accent-dark: #09090b;
+  --dashboard-cyan: #19191c;
+  --bs-body-bg: #f7f7f8; --bs-body-color: #19191c;
+  --bs-secondary-color: #64646d; --bs-border-color: #d8d8dc;
+  --ui-ink: #19191c; --ui-muted: #64646d; --ui-soft: #f7f7f8;
+  --ui-surface: #ffffff; --ui-line: #d8d8dc;
+}
+[data-theme="light"] body { background: #f7f7f8; color: #19191c; }
+[data-theme="light"] :is(.home-page, .pn-scope, .pn-user-dashboard, .user-portal, .module-page) {
+  --text: #19191c; --ink: #19191c; --muted: #64646d;
+  --cream: #f7f7f8; --forest: #f7f7f8;
+  --dashboard-bg: #f7f7f8; --dashboard-text: #19191c;
+  --dashboard-surface: #ffffff; --dashboard-raised: #ebebed;
+  --dashboard-line: #d8d8dc; --dashboard-muted: #64646d;
+  color: #19191c; background-color: #f7f7f8;
+}
+[data-theme="light"] :is(.home-nav, .pn-home-header, .user-portal-header, .home-footer, .home-utility) {
+  background: #f4f4f5 !important; border-color: #d8d8dc; color: #494952;
+}
+[data-theme="light"] :is(.why-section, .pricing-section, .quote-section, .section-light, .home-parking-gallery, .pn-home, .pn-slots-panel, .pn-login-form-side) {
+  background: #f7f7f8; color: #19191c;
+}
+[data-theme="light"] :is(.feature-strip article, .why-grid article, .quote-grid article, .pricing-grid article, .home-parking-photo-card, .module-card:not(.admin-module-card), .user-profile-details, .pn-login-form-wrap, .pn-user-panel, .pn-user-stat-card) {
+  background: #ffffff; border-color: #d8d8dc; color: #19191c;
+  box-shadow: 0 12px 32px #00000024;
+}
+[data-theme="light"] :is(.home-page, .user-portal, .module-page) :is(h1,h2,h3,h4) { color: #111114; }
+[data-theme="light"] :is(.home-page, .user-portal, .module-page) :is(.section-heading > p, .feature-strip p, .why-grid p, .quote-grid p, .pricing-grid p, .hero-copy) { color: #5f5f68; }
+[data-theme="light"] :is(.home-brand, .home-links a, .nav-login, .user-portal-brand) { color: #19191c; }
+[data-theme="light"] .booking-bar { background: #fffffff2; border: 1px solid #d0d0d5; box-shadow: 0 20px 48px #0005; }
+[data-theme="light"] .booking-bar label { background: #ffffff; border-color: #d0d0d5; }
+[data-theme="light"] :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea, .form-control, .pn-google-preview-button) {
+  color: #19191c; background-color: #f4f4f5; border-color: #d0d0d5;
+}
+[data-theme="light"] :is(input,textarea)::placeholder { color: #72727c; opacity: 1; }
+[data-theme="light"] select option { color: #19191c; background: #ffffff; }
+[data-theme="light"] :is(input,select,textarea):focus-visible { outline: 2px solid #19191c; outline-offset: 2px; }
+[data-theme="light"] .pn-google-preview-button:hover { background: #ebebed; border-color: #777780; }
+[data-theme="light"] .text-secondary { color: #64646d !important; }
+[data-theme="light"] .table { --bs-table-bg: #ffffff; --bs-table-color: #19191c; --bs-table-border-color: #d8d8dc; --bs-table-striped-bg: #ebebed; }
+[data-theme="light"] .home-hero { background-color: #f7f7f8; }
+[data-theme="light"] .hero-overlay { background: linear-gradient(100deg,#f7f7f8e8,#f4f4f5a6,#f7f7f8cf); }
+[data-theme="light"] .feature-strip { border-color: #d8d8dc; }
+[data-theme="light"] .home-page a:focus-visible { outline-color: #19191c; }
+@media print { :root[data-theme="light"] { color-scheme: light; } }
+
+/* Red accents on neutral black surfaces, with status and provider colors preserved. */
+[data-theme="light"] :is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page) {
+  --brand: #202024; --brand-soft: #2020241a; --green: #202024; --green-deep: #09090b;
+  --mint: #414148; --hp-green: #202024; --hp-mint: #414148;
+  --ui-accent: #202024; --ui-accent-dark: #09090b; --dashboard-cyan: #19191c;
+}
+[data-theme="light"] :is(.home-nav,.home-utility,.home-footer,.pn-user-sidebar,.pn-home-header) { background: #ffffff !important; }
+[data-theme="light"] :is(.booking-bar button,.hero-button,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost)) {
+  background: #151518 !important; color: #fff; border-color: #202024; box-shadow: 0 6px 20px #15151820;
+}
+[data-theme="light"] :is(.booking-bar button,.hero-button,.pn-user-primary-action):hover { background: #38383e !important; }
+[data-theme="light"] :is(.hero-kicker,.section-kicker,.pn-kicker,.pn-dash-kicker,.home-parking-photo-copy a) { color: #303037; }
+[data-theme="light"] :is(.home-brand::before,.pn-home-brand span,.pn-user-brand > span) { color: #fff; background: #151518; }
+[data-theme="light"] .home-links a:hover { color: #303037; }
+[data-theme="light"] .nav-login { background: #20202414; border: 1px solid #20202455; color: #25252a; }
+[data-theme="light"] .pn-user-welcome-banner { background: linear-gradient(120deg,#e8e8eb,#ffffff); border: 1px solid #d1d1d6; }
+[data-theme="light"] .pn-pay-methods button.active { color: #303037; border-color: #202024; background: #20202414; }
+[data-theme="light"] .pn-pay-checkout { border-color: #20202438; }
+[data-theme="light"] .pn-user-sidebar button.active { color: #25252a; background: #2020241f; }
+
+
+/* Reference-inspired typography and geometry, adapted to parking. */
+[data-theme="light"] { --ui-accent: #19191c; --ui-accent-dark: #09090b; }
+[data-theme="light"] :is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page) {
+  --brand: #19191c; --green: #19191c; --green-deep: #09090b;
+  --hp-green: #19191c; --dashboard-cyan: #303037;
+}
+[data-theme="light"] .home-page { background: #ffffff; }
+[data-theme="light"] .home-nav { background: #fffffff5 !important; border-bottom: 1px solid #00000018; min-height: 84px; }
+[data-theme="light"] .home-brand { font-style: italic; font-weight: 800; letter-spacing: -.06em; }
+[data-theme="light"] .home-brand::before { border-radius: 0; background: #19191c; color: #fff; }
+[data-theme="light"] .home-links a { text-transform: uppercase; font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+[data-theme="light"] .home-page .home-hero {
+  min-height: 650px; display: flex; align-items: center;
+  background-position: center 55%;
+}
+[data-theme="light"] .home-hero .hero-overlay { background: linear-gradient(90deg,#fffffffa 0%,#ffffffe0 35%,#ffffff44 76%),linear-gradient(0deg,#ffffff,transparent 40%); }
+[data-theme="light"] .home-page .hero-content { width: min(1200px,calc(100% - 80px)); margin: 0 auto; padding: 72px 0 95px; text-align: left; }
+[data-theme="light"] .hero-kicker { color: #47474f; letter-spacing: .12em; font-size: 11px; }
+[data-theme="light"] .hero-kicker::before,[data-theme="light"] .hero-kicker::after { display: none; }
+[data-theme="light"] .home-page .hero-content h1 { font: 700 clamp(58px,7.8vw,106px)/.95 'Barlow Condensed','Arial Narrow',sans-serif; text-transform: uppercase; letter-spacing: -.025em; max-width: 720px; text-shadow: none; }
+[data-theme="light"] .hero-content h1 em { color: #19191c; font-style: normal; }
+[data-theme="light"] .home-page .hero-copy { max-width: 390px; margin: 25px 0 30px; color: #494952; line-height: 1.7; }
+[data-theme="light"] .home-page .booking-bar { margin: 0; max-width: 940px; border-radius: 0; background: #ffffffed; border: 1px solid #00000025; box-shadow: none; }
+[data-theme="light"] .home-page .booking-bar label { background: #ffffff; }
+[data-theme="light"] :is(.home-page button,.pn-user-primary-action,.pn-pay-submit) { border-radius: 2px; }
+[data-theme="light"] :is(.booking-bar button,.hero-button,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost),.home-page .nav-login) { background: #19191c !important; border-color: #19191c; color: #fff; box-shadow: none; }
+[data-theme="light"] .home-page .nav-login { padding: 13px 24px; text-transform: uppercase; font-size: 11px; letter-spacing: .07em; }
+[data-theme="light"] :is(.home-page h2,.home-page h3,.pn-user-welcome-banner h1,.pn-login-form-wrap h1,.pn-slots-heading h1) { font-family: 'Barlow Condensed','Arial Narrow',sans-serif; text-transform: uppercase; font-weight: 600; letter-spacing: -.015em; }
+[data-theme="light"] .section-heading h2 { font-size: clamp(34px,4vw,50px); }
+[data-theme="light"] :is(.feature-strip,.why-grid article,.quote-grid article,.pricing-grid article,.home-parking-photo-card,.pn-user-panel,.pn-user-stat-card,.pn-pay-checkout) { border-radius: 2px; border: 1px solid #00000020; background: #f4f4f5; box-shadow: none; }
+[data-theme="light"] .feature-strip { margin-top: 0; border-left: 0; border-right: 0; }
+[data-theme="light"] :is(.feature-number,.section-kicker,.home-parking-photo-copy a) { color: #303037; }
+[data-theme="light"] .home-parking-photo-wrap img { filter: saturate(.55) contrast(1.1); }
+[data-theme="light"] :is(.why-section,.quote-section,.pricing-section,.home-parking-gallery) { background: #ffffff; border-bottom: 1px solid #00000012; }
+[data-theme="light"] .why-section { background: radial-gradient(ellipse at right bottom,#00000008,transparent 65%),#ffffff; }
+[data-theme="light"] .home-page .pricing-grid .popular-plan { border-top: 3px solid #19191c; background: linear-gradient(160deg,#eeeeef,#f4f4f5 65%); }
+[data-theme="light"] .home-footer { border-top: 2px solid #252529; background: #ffffff !important; }
+[data-theme="light"] .pn-user-welcome-banner { background: linear-gradient(110deg,#eeeeef,#f4f4f5 75%); border-color: #d0d0d5; }
+@media (max-width:760px) {
+  [data-theme="light"] .home-page .home-hero { min-height: 640px; background-position: 65% center; }
+  [data-theme="light"] .home-page .hero-content { width: calc(100% - 40px); padding: 50px 0 65px; }
+  [data-theme="light"] .home-page .hero-content h1 { font-size: clamp(52px,11vw,78px); }
+  [data-theme="light"] .home-page .booking-bar { width: 100%; }
+}
+
+[data-theme="light"] .home-page .home-hero::after { display: none; }
+[data-theme="light"] .home-page .home-hero .hero-overlay { background: linear-gradient(90deg,#fffffff5,#ffffffc9 38%,#ffffff30 85%),linear-gradient(0deg,#ffffff,transparent 60%) !important; }
+[data-theme="light"] .home-page .hero-content h1 { text-align: left; margin: 0; }
+[data-theme="light"] .home-page .hero-kicker { background: transparent; border: 0; padding: 0; border-radius: 0; }
+
+/* Volt keeps its friendly face and interactions in the site's red/black palette. */
+[data-theme="light"] .pn-modern-login.pn-robot-login { --robot-cyan: #252529; --robot-pink: #19191c; --robot-violet: #44444b; background: #f7f7f8; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-visual { background: radial-gradient(ellipse at 50% 45%,#00000008,transparent 65%),radial-gradient(#00000015 1px,transparent 1px),#f4f4f5; background-size: auto,18px 18px,auto; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-visual::before { background: #19191c10; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-visual::after { background: #19191c08; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-face { border-color: #a2a2aa; background: linear-gradient(145deg,#e0e0e4,#bcbcc4 70%,#d2d2d8); box-shadow: inset 0 2px 8px #ffffff18,inset 0 -8px 18px #0009,0 22px 42px #0008; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-visor { background: linear-gradient(145deg,#29292e,#141418); border-color: #919199; box-shadow: inset 0 3px 14px #000,0 0 18px #19191c12; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-eyes span { background: #ffffff; box-shadow: 0 0 12px #25252950; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-mouth { background: #ffffff; box-shadow: 0 0 8px #25252940; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-ear { background: linear-gradient(90deg,#c4c4cc,#e2e2e6); border-color: #a2a2aa; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-ear::after { background: #252529; box-shadow: 0 0 10px #25252955; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-antenna-rod { background: linear-gradient(#ed233c,#888892); }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-antenna-tip { background: #333339; border-color: #aaaaaf; box-shadow: 0 0 15px #ed233c66; animation: none; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-bubble { background: #ffffff; color: #242428; border-color: #919199; box-shadow: 0 8px 24px #0005; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-bubble::after { background: #ffffff; border-color: #919199; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-back-panel { background: linear-gradient(145deg,#dadade,#29292e); border-color: #919199; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-form-wrap { background: #ffffff; border-color: #343036; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-button-primary { background: #19191c; color: #fff; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-button-primary:hover { background: #38383e; }
+[data-theme="light"] .pn-modern-login.pn-robot-login :is(.pn-link,.pn-foot-link a,.pn-robot-password-toggle) { color: #44444b; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-field input { background: #ffffff; border-color: #d0d0d5; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-field input:focus { border-color: #252529; box-shadow: 0 0 0 3px #00000015; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-checkbox input { accent-color: #19191c; }
+
+/* Monochrome controls use white labels on black in either surface context. */
+[data-theme="light"] :is(.booking-bar button,.hero-button,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost),.home-page .nav-login,.pn-modern-login.pn-robot-login .pn-button-primary) { background: #19191c !important; color: #fff; border-color: #19191c; }
+[data-theme="light"] .home-page .home-hero .hero-overlay { background: linear-gradient(90deg,#fffffff5,#ffffffd9 38%,#ffffff40 85%),linear-gradient(0deg,#fff,transparent 60%) !important; }
+[data-theme="light"] .home-page .hero-content { color: #19191c; }
+[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-eyes span,[data-theme="light"] .pn-modern-login.pn-robot-login .pn-robot-mouth { background: #fff; }
+[data-theme="light"] .home-brand::before { color: #fff; background: #19191c; }
+
+[data-theme="light"] .home-page :is(.home-brand,.footer-brand) { color: #19191c !important; }
+[data-theme="light"] .home-page .theme-toggle { color: #19191c; background: #f0f0f2; border-color: #ccc; }

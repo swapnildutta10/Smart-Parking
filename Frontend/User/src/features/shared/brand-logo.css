@@ -1,0 +1,28 @@
+/* Fixed artwork colors keep the identity identical across both themes. */
+:root .pn-brand-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+  text-decoration: none;
+}
+:root .pn-brand-link::before {
+  content: none !important;
+  display: none !important;
+}
+:root img.pn-brand-logo {
+  display: block;
+  width: 202px;
+  height: 47px;
+  overflow: visible;
+  flex-shrink: 0;
+  font-style: normal;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+}
+@media (max-width: 600px) {
+  :root img.pn-brand-logo { width: 168px; height: 39px; }
+}

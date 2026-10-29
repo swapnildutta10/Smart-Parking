@@ -1,51 +1,46 @@
+import LoginShell from "./LoginShell";
 import React from "react";
-import { ADMIN_CREDENTIALS } from "./authCredentials";
-
+import CaptchaChallenge from "./CaptchaChallenge";
 const USER_SITE_URL =
   process.env.REACT_APP_USER_SITE_URL || "http://localhost:3000";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
-function AdminLogin({ onLoginSuccess }) {
+function AdminLogin({ onLoginSuccess, onMemberLogin }) {
   const [adminId, setAdminId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [captcha, setCaptcha] = React.useState({ id: "", answer: "" });
+  const [captchaRefresh, setCaptchaRefresh] = React.useState(0);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const isValid =
-      adminId.trim() === ADMIN_CREDENTIALS.id &&
-      password === ADMIN_CREDENTIALS.password;
-
-    if (!isValid) {
-      setError("That admin ID or password isn't recognized.");
-      return;
-    }
+    setIsSubmitting(true);
     setError("");
-    setSubmitted(true);
-
-    if (onLoginSuccess) {
-      onLoginSuccess();
+    try {
+      const response = await fetch(`${API_URL}/admin/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminId: adminId.trim(), password, captchaId: captcha.id, captchaAnswer: captcha.answer }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || "Could not sign in.");
+      localStorage.setItem("parknova-admin-token", result.token);
+      setSubmitted(true);
+      onLoginSuccess?.(result.token);
+    } catch (loginError) {
+      setCaptcha({ id: "", answer: "" });
+      setCaptchaRefresh(value => value + 1);
+      setError(loginError.message || "Could not reach the server. Check that the backend is running.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
-    <div className="pn-scope pn-admin-login">
-      <div className="pn-admin-shell">
-        <aside className="pn-admin-intro">
-          <div className="pn-admin-brand">
-            <span className="pn-admin-brand-mark" aria-hidden="true">P</span>
-            <span>ParkNova</span>
-          </div>
-          <img
-            className="pn-admin-lot-photo"
-            src="/Images/parking-garage.jpg"
-            alt=""
-          />
-        </aside>
-
-        <main className="pn-admin-main">
-          <div className="pn-admin-form-wrap">
+    <LoginShell onSwitch={onMemberLogin}>
             {!submitted ? (
               <>
                 <p className="pn-admin-overline">ADMINISTRATOR SIGN IN</p>
@@ -54,12 +49,12 @@ function AdminLogin({ onLoginSuccess }) {
 
                 <form className="pn-admin-form" onSubmit={handleSubmit}>
                   <label className="pn-admin-field">
-                    Admin ID
+                    Admin id
                     <input
                       required
                       autoComplete="username"
                       type="text"
-                      placeholder="Enter your admin ID"
+                      placeholder="Enter your admin id"
                       value={adminId}
                       onChange={(event) => setAdminId(event.target.value)}
                       aria-invalid={Boolean(error)}
@@ -103,9 +98,10 @@ function AdminLogin({ onLoginSuccess }) {
                     </span>
                   </label>
 
+                  <CaptchaChallenge purpose="admin" value={captcha} onChange={setCaptcha} refreshKey={captchaRefresh} disabled={isSubmitting} />
                   {error && <p className="pn-admin-error" role="alert">{error}</p>}
 
-                  <button className="pn-admin-submit" type="submit">
+                  <button className="pn-admin-submit" type="submit" disabled={isSubmitting || !captcha.id || captcha.answer.trim().length !== 5}>
                     Sign in to dashboard <span aria-hidden="true">→</span>
                   </button>
                 </form>
@@ -133,10 +129,7 @@ function AdminLogin({ onLoginSuccess }) {
             >
               ← Visit the ParkNova user site
             </a>
-          </div>
-        </main>
-      </div>
-    </div>
+    </LoginShell>
   );
 }
 

@@ -1,3 +1,4 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 
 
@@ -5,7 +6,7 @@ function LoginSelect({ onSelectUser, onSelectAdmin }) {
   return (
     <main className="module-page">
       <div className="module-header">
-        <div className="brand">ParkNova</div>
+        <div className="brand pn-brand-link"><BrandLogo /></div>
       </div>
 
       <div className="module-content">

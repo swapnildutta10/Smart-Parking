@@ -1,3 +1,4 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/front_page.css";
@@ -59,9 +60,7 @@ function App() {
         </span>
       </div>
       <nav className="home-nav container-fluid">
-        <a className="home-brand" href="#top">
-          ParkNova
-        </a>
+        <a className="home-brand pn-brand-link" href="#top"><BrandLogo /></a>
         <div className="home-links">
           <a href="#home">Home</a>
           <a href="#features">Features</a>
@@ -315,9 +314,7 @@ function App() {
       </section>
       <footer className="home-footer" id="contact">
         <div>
-          <a className="home-brand footer-brand" href="#top">
-            ParkNova
-          </a>
+          <a className="home-brand footer-brand pn-brand-link" href="#top"><BrandLogo /></a>
           <p>
             Official providers of smart city parking.
             <br />
@@ -390,9 +387,7 @@ function App() {
   return (
     <main className="register-page container-fluid px-0">
       <aside className="story-panel col-lg-5">
-        <div className="brand">
-          ParkNova
-        </div>
+        <div className="brand pn-brand-link"><BrandLogo /></div>
         <button
           className={`theme-toggle${themeAnimating ? " theme-toggle--animating" : ""}`}
           type="button"
@@ -446,9 +441,7 @@ function App() {
 
       <section className="form-panel col-lg-7">
         <div className="form-wrap">
-          <div className="mobile-brand brand">
-            ParkNova
-          </div>
+          <div className="mobile-brand brand pn-brand-link"><BrandLogo /></div>
           {!started ? (
             <div className="welcome-state">
               <div className="welcome-badge">

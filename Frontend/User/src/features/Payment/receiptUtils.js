@@ -5,6 +5,7 @@ import { TAX_RATE, formatDate, formatDateTime, formatMoney } from "./paymentUtil
 export function getReceiptSections(payment) {
   const { fee } = payment;
   const details = [
+    ...(payment.isTest ? [["Payment note", "No money charged"]] : []),
     ["Receipt no.", payment.receiptNo],
     ["Paid on", formatDateTime(payment.paidAt)],
     ["Booking", payment.bookingId],

@@ -17,18 +17,31 @@ function formatTimelineDateTime(dateTime) {
 
 function BookingDetails({ booking, onStatusChange }) {
   const [confirmingAction, setConfirmingAction] = React.useState(null);
+  const [busy, setBusy] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  async function saveStatus(status, label) {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      await onStatusChange(booking.id, status, label);
+      setConfirmingAction(null);
+    } catch (err) {
+      setError(err.message || "Could not update the booking. Please try again.");
+    } finally { setBusy(false); }
+  }
 
   function requestStatusChange(status, label, needsConfirmation = false) {
     if (needsConfirmation) {
       setConfirmingAction({ status, label });
       return;
     }
-    onStatusChange(booking.id, status, label);
+    saveStatus(status, label);
   }
 
   function confirmStatusChange() {
-    onStatusChange(booking.id, confirmingAction.status, confirmingAction.label);
-    setConfirmingAction(null);
+    saveStatus(confirmingAction.status, confirmingAction.label);
   }
 
   return (
@@ -51,7 +64,9 @@ function BookingDetails({ booking, onStatusChange }) {
         </ol>
       </div>
 
-      <div className="pn-admin-booking-actions">
+      {error && <p role="alert">{error}</p>}
+      {busy && <p role="status">Saving booking…</p>}
+      <fieldset className="pn-admin-booking-actions" disabled={busy} style={{ border: 0, padding: 0 }}>
         {booking.status === "upcoming" && (
           <>
             <button type="button" onClick={() => requestStatusChange("checked_in", "Checked in")}>Check in</button>
@@ -73,7 +88,7 @@ function BookingDetails({ booking, onStatusChange }) {
         {!["upcoming", "checked_in"].includes(booking.status) && (
           <span className="pn-admin-booking-terminal-note">No actions available for this booking.</span>
         )}
-      </div>
+      </fieldset>
     </div>
   );
 }

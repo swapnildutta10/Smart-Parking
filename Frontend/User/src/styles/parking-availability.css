@@ -1,0 +1,47 @@
+.pn-real-lot { border: 1px solid #36434c; border-radius: 16px; background: #17212a; overflow: hidden; color: #e1eaf0; }
+.pn-lot-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 16px 20px; border-bottom: 1px solid #ffffff0b; }
+.pn-lot-toolbar > span { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.pn-lot-toolbar b { font-size: 10px; font-weight: 400; letter-spacing: 0; color: #a4b2bc; border-left: 1px solid #52616b; padding-left: 10px; margin-left: 4px; }
+.pn-lot-toolbar i { width: 6px; height: 6px; border-radius: 50%; background: #87d8b7; }
+.pn-lot-toolbar small { color: #9babb7; font-size: 10px; }
+.pn-lot-stats { display: flex; align-items: center; gap: 28px; padding: 18px 20px; }
+.pn-lot-stats > div { display: flex; align-items: center; gap: 7px; }
+.pn-lot-stats strong { font-size: 22px; font-variant-numeric: tabular-nums; letter-spacing: -.05em; }
+.pn-lot-stats span { color: #a7b5bf; font-size: 11px; }
+.pn-lot-stats i, .pn-lot-footer i { width: 7px; height: 7px; border-radius: 2px; background: #6ebf9e; display: inline-block; }
+.pn-lot-stats i.is-occupied, .pn-lot-footer i.is-occupied { background: #7f8a95; }
+.pn-lot-footer i.is-selected { background: #6bcbf3; }
+.pn-lot-stats .pn-lot-occupancy { margin-left: auto; padding-left: 20px; border-left: 1px solid #ffffff15; }
+.pn-lot-scroll { overflow-x: auto; padding: 0 16px 16px; scrollbar-color: #506471 #17212a; scrollbar-width: thin; }
+.pn-lot-ground { min-width: 650px; padding: 0 22px; border-radius: 10px; border: 1px solid #ffffff0b; background: repeating-linear-gradient(13deg, #ffffff02 0 1px, transparent 1px 4px), repeating-linear-gradient(103deg, #00000008 0 1px, transparent 1px 5px), #30373c; box-shadow: inset 0 0 60px #0004; }
+.pn-lot-boundary { display: flex; justify-content: space-between; align-items: center; height: 38px; padding: 0 6px; color: #b0b9bc; font-size: 8px; letter-spacing: .2em; border-bottom: 5px solid #59605c; margin-bottom: 14px; }
+.pn-lot-bays { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.pn-lot-bay { position: relative; display: flex; justify-content: center; align-items: center; min-width: 0; height: 120px; padding: 16px 4px 12px; border: 0; border-left: 2px solid #b6bcb178; border-radius: 0; background: transparent; color: #d0d9db; cursor: pointer; font: inherit; }
+.pn-lot-bay:last-child { border-right: 2px solid #b6bcb178; }
+.pn-lot-bays-top { border-top: 2px solid #b6bcb178; }
+.pn-lot-bays-bottom { border-bottom: 2px solid #b6bcb178; }
+.pn-lot-bay:disabled { cursor: default; opacity: 1; }
+.pn-lot-bay-number { position: absolute; top: 5px; left: 0; width: 100%; text-align: center; color: #c2c9c9; font-size: 8px; font-weight: 600; letter-spacing: .02em; }
+.pn-lot-car { display: block; width: 42px; height: 82px; filter: drop-shadow(3px 4px 2px #0005); transform: rotate(-2deg); }
+.pn-lot-bay:nth-child(3n) .pn-lot-car { transform: rotate(2deg); }
+.pn-lot-bays-bottom .pn-lot-car { transform: rotate(180deg); }
+.pn-lot-bay.is-open { background: linear-gradient(#73d3a508, #73d3a51a); }
+.pn-lot-open-symbol { display: grid; place-items: center; width: 28px; height: 30px; border: 1px solid #80cba177; color: #a6d6b9; border-radius: 5px; font-size: 17px; font-weight: 500; }
+.pn-lot-bay.is-open:hover { background: #73d3a52a; }
+.pn-lot-bay.is-selected { background: #63c7ee25; box-shadow: inset 0 0 0 2px #83d6f3; }
+.pn-lot-bay.is-selected .pn-lot-open-symbol { color: #c1efff; border-color: #7acfeb; }
+.pn-lot-bay:focus-visible { outline: 2px solid #c0eeff; outline-offset: -4px; z-index: 1; }
+.pn-lot-sensor { position: absolute; bottom: 4px; width: 5px; height: 3px; background: #b6796c; border-radius: 3px; }
+.pn-lot-bay.is-open .pn-lot-sensor { background: #8bdbb4; box-shadow: 0 0 5px #8bdbb455; }
+.pn-lot-road { height: 84px; display: flex; justify-content: space-between; align-items: center; position: relative; margin: 0 -16px; padding: 0 8px; border-top: 1px solid #ffffff10; border-bottom: 1px solid #ffffff10; }
+.pn-lot-road::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: repeating-linear-gradient(90deg, #c8c8ae40 0 18px, transparent 18px 36px); }
+.pn-lot-road > span { position: relative; background: #30373c; padding: 4px 8px; }
+.pn-lot-entry, .pn-lot-exit { color: #cfcdab; font-size: 9px; letter-spacing: .1em; }
+.pn-lot-road-arrow { color: #dbd9bf; font-size: 30px; }
+.pn-lot-road-label { color: #b2b6ae; font-size: 8px; letter-spacing: .15em; }
+.pn-lot-walkway { margin: 14px -6px 0; padding: 8px 12px; text-align: center; border-top: 3px solid #b4a36d; background: repeating-linear-gradient(90deg, #ffffff03 0 16px, #ffffff09 16px 18px); }
+.pn-lot-walkway span { font-size: 7px; color: #aeb6b4; letter-spacing: .22em; }
+.pn-lot-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; padding: 2px 20px 16px; }
+.pn-lot-footer > span { display: flex; align-items: center; gap: 6px; color: #b8c4cd; font-size: 10px; }
+.pn-lot-footer small { margin-left: auto; color: #97a9b6; font-size: 10px; }
+@media (max-width: 520px) { .pn-lot-stats { gap: 16px; padding: 14px; flex-wrap: wrap; } .pn-lot-stats strong { font-size: 18px; } .pn-lot-stats span { font-size: 10px; } .pn-lot-stats .pn-lot-occupancy { padding-left: 12px; } .pn-lot-toolbar { padding: 14px; } .pn-lot-footer { padding: 0 14px 14px; gap: 12px; } .pn-lot-footer small { margin: 0; width: 100%; } }

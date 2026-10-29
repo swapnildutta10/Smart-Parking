@@ -1,0 +1,49 @@
+/* Scroll choreography for the existing hero only. Modules below keep their normal flow. */
+.home-scroll-story { position: relative; --parking-scroll: 0; }
+.home-scroll-chapters, .home-scroll-navigation { display: none; }
+@media (min-width: 1000px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+  .home-page .home-scroll-story { height: 240svh; }
+  .home-page .home-scroll-story > .home-hero { position: sticky; top: var(--home-nav-height, 78px); height: calc(100svh - var(--hero-top-inset, var(--home-nav-height, 78px))); min-height: 0; overflow: hidden; }
+  .home-page .home-scroll-story .home-hero-stage { height: 100%; padding-top: 30px; padding-bottom: 68px; }
+  .home-page .home-scroll-story .hero-content h1 { font-size: clamp(38px, 4.3vw, 60px); }
+  .home-page .home-scroll-story .hero-content { transform: translate3d(0, calc(var(--parking-scroll) * -12px), 0); }
+  .home-page .home-scroll-story .home-hero-visual { height: min(470px, 66svh); max-height: 100%; border-color: #b1ebd01a; transform: perspective(1400px) rotateY(calc((.5 - var(--parking-scroll)) * -5deg)); }
+  .home-page .home-scroll-story .home-visual-caption { display: none; }
+  .home-scroll-chapters { display: grid; position: absolute; bottom: 60px; left: 24px; right: 24px; pointer-events: none; }
+  .home-scroll-chapter { grid-area: 1 / 1; display: grid; gap: 7px; opacity: 0; transform: translateY(10px); transition: opacity .25s ease, transform .35s ease; }
+  .home-scroll-chapter small { color: #8fbbab; font-size: 7px; letter-spacing: .16em; }
+  .home-scroll-chapter strong { color: #deeee7; font-size: 14px; font-weight: 500; letter-spacing: -.02em; }
+  .home-scroll-story[data-scroll-step="find"] [data-chapter="find"],
+  .home-scroll-story[data-scroll-step="arrive"] [data-chapter="arrive"],
+  .home-scroll-story[data-scroll-step="park"] [data-chapter="park"] { opacity: 1; transform: none; }
+  .home-scroll-navigation { position: absolute; bottom: 23px; left: max(32px, calc((100vw - 1200px) / 2)); right: max(32px, calc((100vw - 1200px) / 2)); display: flex; align-items: center; gap: 20px; color: #a9c6b9; font-size: 9px; }
+  .home-scroll-navigation > span { white-space: nowrap; }
+  .home-scroll-navigation > span > span { margin-left: 10px; }
+  .home-scroll-navigation a { margin-left: auto; color: #9ab6ad; white-space: nowrap; text-decoration: none; font-size: 9px; }
+  .home-scroll-navigation a:hover { color: #d0f6e4; }
+  .home-scroll-progress { height: 2px; width: min(180px, 20vw); background: #b1ebd01a; border-radius: 2px; }
+  .home-scroll-progress i { display: block; width: 100%; height: 100%; border-radius: 2px; background: #b1ebd0; transform: scaleX(var(--parking-scroll)); transform-origin: left; }
+  .home-page .home-scroll-story .booking-bar { gap: 6px; padding: 8px; }
+  .home-page .home-scroll-story .hero-copy { margin-bottom: 20px; }
+  .home-page .home-scroll-story .hero-content h1 { margin-top: 16px; margin-bottom: 16px; }
+}
+
+.home-page .home-scroll-story[data-static-scene="true"] { height: auto; }
+.home-page .home-scroll-story[data-static-scene="true"] > .home-hero { position: relative; top: auto; height: auto; }
+.home-scroll-story[data-static-scene="true"] .home-scroll-navigation, .home-scroll-story[data-static-scene="true"] .home-scroll-chapters { display: none; }
+
+@media (min-width: 1000px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+  .home-page .home-scroll-story .home-hero-visual .parking-scene { inset: 40px -8px 104px; }
+}
+
+/* Large, unboxed car presentation observed in the SPARQ reference. */
+@media (min-width: 1000px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+  .home-page .home-scroll-story .home-hero-visual { border-color: transparent; background: transparent; box-shadow: none; transform: none; }
+  .home-page .home-scroll-story .home-hero-visual .parking-scene { inset: 26px -24px 88px; }
+  .home-scroll-chapters { bottom: 46px; }
+  .home-scroll-chapter strong { font-size: 16px; }
+  .home-page .home-scroll-story .parking-scene-status { top: 54px; background: #14282780; }
+}
+
+.parking-model-credit { position: absolute; bottom: 17px; left: 24px; z-index: 3; color: #8ba99d; font-size: 7px; text-decoration: none; }
+.parking-model-credit:hover { color: #c9eedc; }

@@ -1,3 +1,4 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
 import { MEMBER_CREDENTIALS } from "../../shared/authCredentials";
 
@@ -60,8 +61,8 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
         </div>
       )}
       <aside className="pn-login-visual">
-        <div className="pn-login-brand">
-          <span>P</span> ParkNova
+        <div className="pn-login-brand pn-brand-link">
+          <BrandLogo />
         </div>
 
         <div className="pn-login-map" aria-hidden="true">

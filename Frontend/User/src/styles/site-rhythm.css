@@ -1,0 +1,339 @@
+/* Shared typography and spacing; existing module grids and theme colors are preserved. */
+:root { --site-body-font: 'Inter','Segoe UI',sans-serif; --site-section-space: clamp(56px,7vw,96px); --site-page-gutter: clamp(20px,4vw,56px); }
+body { font-family: var(--site-body-font); line-height: 1.6; }
+:is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page) { font-family: var(--site-body-font); -webkit-font-smoothing: antialiased; }
+:is(.home-page,.pn-scope,.pn-user-dashboard,.user-portal,.module-page) :is(button,input,select,textarea) { font-family: inherit; }
+:is([data-theme="dark"],[data-theme="light"]) .home-page :is(.why-section,.quote-section,.pricing-section,.home-parking-gallery) { padding: var(--site-section-space) max(var(--site-page-gutter),calc((100% - 1160px)/2)); }
+:is([data-theme="dark"],[data-theme="light"]) .home-page .home-nav { padding-inline: max(var(--site-page-gutter),calc((100% - 1200px)/2)); gap: 24px; }
+:is([data-theme="dark"],[data-theme="light"]) .home-page .home-links { gap: clamp(16px,2vw,28px); }
+:is([data-theme="dark"],[data-theme="light"]) .home-page .hero-content { width: min(1160px,calc(100% - var(--site-page-gutter)*2)); }
+:is([data-theme="dark"],[data-theme="light"]) .home-page .hero-content h1 { font-size: clamp(56px,7.2vw,96px); line-height: 1.02; letter-spacing: -.025em; }
+:is([data-theme="dark"],[data-theme="light"]) .home-page .hero-copy { font-size: 16px; line-height: 1.75; max-width: 440px; margin-block: 24px 32px; }
+:is([data-theme="dark"],[data-theme="light"]) .home-page :is(.section-heading h2,.home-parking-gallery-heading h2) { font-size: clamp(34px,4vw,48px); line-height: 1.12; letter-spacing: -.015em; }
+.home-page .section-heading { margin-bottom: 40px; }
+.home-page :is(.section-kicker,.hero-kicker) { font-size: 11px; line-height: 1.5; letter-spacing: .13em; }
+.home-page :is(.why-grid,.quote-grid,.pricing-grid) { gap: 24px; align-items: stretch; }
+.home-page :is(.why-grid article,.quote-grid article,.pricing-grid article) { min-width: 0; padding: 28px 24px; }
+:is([data-theme="dark"],[data-theme="light"]) .home-page :is(.why-grid h3,.pricing-grid h3,.home-parking-photo-copy h3) { font-size: 24px; line-height: 1.2; margin-bottom: 12px; }
+.home-page :is(.why-grid p,.quote-grid p,.pricing-grid p,.home-parking-photo-copy p,.section-heading > p:last-child,.home-parking-gallery-heading > p) { font-size: 14px; line-height: 1.75; }
+.home-page .pricing-grid article { display: flex; flex-direction: column; }
+.home-page .pricing-grid article > button { margin-top: auto; width: 100%; min-height: 46px; white-space: nowrap; }
+.home-page .pricing-grid article > p { margin-bottom: 24px; }
+.home-page .feature-strip { gap: 0; }
+.home-page .feature-strip article { padding: 28px 24px; }
+.home-page .feature-strip h2 { font-size: 24px; line-height: 1.2; margin-bottom: 8px; }
+.home-page .feature-strip p { font-size: 13px; line-height: 1.7; }
+.home-page .booking-bar :is(input,select,button) { font-size: 14px; }
+.home-page .home-parking-photo-copy { padding: 28px; }
+.home-page .home-footer { gap: 32px; padding: 56px max(var(--site-page-gutter),calc((100% - 1160px)/2)); }
+.home-page .footer-column :is(a,p) { font-size: 13px; line-height: 1.8; }
+/* Module text uses the same readable scale without changing navigation or grids. */
+.pn-user-dashboard .pn-user-panel { padding: 24px; }
+.pn-user-dashboard :is(.pn-user-panel-heading,.pn-user-feature-page > .pn-user-panel-heading) { margin-bottom: 20px; gap: 16px; }
+.pn-user-dashboard :is(.pn-user-panel-heading h2,.pn-user-feature-empty h3) { font-family: var(--site-body-font); font-size: 20px; line-height: 1.3; letter-spacing: -.025em; }
+.pn-user-dashboard :is(.pn-user-payment-copy strong,.pn-user-nav button,.pn-user-outline-action) { font-size: 13px; }
+.pn-user-dashboard :is(.pn-user-payment-copy small,.pn-user-feature-empty-copy) { font-size: 12px; line-height: 1.6; }
+.pn-user-dashboard :is(.pn-user-payment-row,.pn-notification-item,.pn-booking-item) { padding-block: 18px; }
+.pn-user-dashboard .pn-user-vehicle-form { gap: 16px; }
+:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-form-wrap { padding: 36px; }
+:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-form-wrap h1 { font-family: var(--site-body-font); font-size: clamp(28px,3vw,36px); line-height: 1.2; text-transform: none; letter-spacing: -.04em; margin-bottom: 12px; }
+:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-field { font-size: 13px; gap: 8px; }
+:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-field input { font-size: 15px; min-height: 50px; }
+.pn-scope .pn-form { gap: 20px; }
+.pn-slots-heading { margin-bottom: 32px; }
+.pn-slots-heading p { font-size: 15px; line-height: 1.7; }
+.pn-pay-card :is(h2,h3) { line-height: 1.3; letter-spacing: -.025em; }
+.pn-pay-card :is(p,label,button,input,select) { line-height: 1.6; }
+.pn-pay-head { margin-bottom: 24px; }
+.pn-pay-lines > div { padding-block: 8px; }
+.pn-pay-methods { gap: 12px; }
+.pn-pay-summary { gap: 16px; }
+@media (max-width:1000px) {
+  :is([data-theme="dark"],[data-theme="light"]) .home-page .home-nav { gap: 14px; }
+  :is([data-theme="dark"],[data-theme="light"]) .home-page .home-links { gap: 14px; }
+}
+@media (max-width:760px) {
+  .home-page :is(.why-grid,.quote-grid,.pricing-grid) { gap: 20px; }
+  .home-page :is(.why-grid article,.quote-grid article,.pricing-grid article) { padding: 24px; }
+  :is([data-theme="dark"],[data-theme="light"]) .home-page .hero-content { padding-block: 48px 64px; }
+  :is([data-theme="dark"],[data-theme="light"]) .home-page .hero-content h1 { font-size: clamp(48px,10.5vw,72px); }
+  .home-page .booking-bar :is(input,select) { font-size: 16px; }
+  .home-page .home-parking-photo-copy { padding: 24px; }
+  .pn-user-dashboard .pn-user-panel { padding: 20px; }
+  :is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-form-wrap { padding: 28px 22px; }
+  :is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-field input { font-size: 16px; }
+}
+
+/* The featured plan's red-to-black treatment carried across homepage cards. */
+:root[data-theme="dark"] .home-page :is(.feature-strip article,.why-grid article,.home-parking-photo-card,.quote-grid article,.pricing-grid article) {
+  background: linear-gradient(155deg,#321117 0%,#201216 35%,#121214 85%) !important;
+  border-color: #67303a; box-shadow: inset 0 1px 0 #ffffff06;
+}
+:root[data-theme="dark"] .home-page .home-parking-photo-copy { background: linear-gradient(155deg,#321117,#121214 90%); }
+:root[data-theme="dark"] .home-page .pricing-grid .popular-plan {
+  background: linear-gradient(155deg,#49101b 0%,#281116 38%,#121214 88%) !important;
+  border-color: #e50919; box-shadow: inset 0 1px 0 #ed233c45;
+}
+:root[data-theme="light"] .home-page :is(.feature-strip article,.why-grid article,.home-parking-photo-card,.quote-grid article,.pricing-grid article) {
+  background: linear-gradient(155deg,#ffffff 0%,#eeeef1 42%,#d9d9df 100%) !important;
+  border-color: #d6d6db; box-shadow: inset 0 1px 0 #fff;
+}
+:root[data-theme="light"] .home-page .home-parking-photo-copy { background: linear-gradient(155deg,#ffffff,#d9d9df); }
+:root[data-theme="light"] .home-page .pricing-grid .popular-plan { background: linear-gradient(155deg,#e1e1e7,#cfcfd7 100%) !important; border-color: #55555d; }
+
+/* Shared card gradients across account screens, with neutral form controls. */
+:root[data-theme="dark"] { --account-card-gradient: linear-gradient(155deg,#321117 0%,#201216 35%,#121214 85%); --account-card-border: #67303a; }
+:root[data-theme="light"] { --account-card-gradient: linear-gradient(155deg,#ffffff 0%,#eeeef1 42%,#d9d9df 100%); --account-card-border: #d6d6db; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard :is(.pn-user-panel,.pn-user-stat-card,.pn-user-welcome-banner,.pn-slot-card,.pn-booking-confirm-card),
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-form-wrap {
+  background: var(--account-card-gradient) !important;
+  border-color: var(--account-card-border); box-shadow: inset 0 1px 0 #ffffff08;
+}
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar { background: linear-gradient(170deg,#260e14,#0c0b0d 75%) !important; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar { background: linear-gradient(170deg,#fff,#f0f0f3) !important; }
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login {
+  background: radial-gradient(ellipse at 20% 12%,#49101b44,transparent 65%),#090909 !important;
+}
+:root[data-theme="light"] .pn-modern-login.pn-robot-login { background: linear-gradient(145deg,#fff,#f0f0f3) !important; }
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login .pn-login-visual {
+  background: radial-gradient(#ed233c22 .8px,transparent .8px),linear-gradient(155deg,#321117,#121214 85%) !important;
+  background-size: 16px 16px,auto !important;
+}
+:root[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-visual {
+  background: radial-gradient(#11111116 .8px,transparent .8px),linear-gradient(155deg,#ffffff,#d9d9df) !important;
+  background-size: 16px 16px,auto !important;
+}
+
+/* One continuous login backdrop; no separate rectangular robot surface. */
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login {
+  background: radial-gradient(ellipse at 50% 34%,#3b0b1538 0%,transparent 64%),#080808 !important;
+}
+:root[data-theme="light"] .pn-modern-login.pn-robot-login { background: #fafafa !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login :is(.pn-login-visual,.pn-robot-scene) {
+  background: transparent !important; background-image: none !important;
+  border: 0; box-shadow: none;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-visual::before,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-modern-login.pn-robot-login .pn-login-visual::after { display: none; }
+:root[data-theme="dark"] .pn-modern-login.pn-robot-login .pn-login-brand span { background: #df1023; color: #fff !important; }
+:root[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-brand span { background: #19191c; color: #fff !important; }
+
+/* Complete the shared gradients on nested dashboard modules. */
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-dashboard-main :is(.pn-slot-card,.pn-slot-card .card-body,.pn-booking-item,.pn-notification-item,.pn-user-inline-panel,.pn-profile-card,.pn-form-card,.pn-parking-filters) {
+  background: var(--account-card-gradient) !important; border-color: var(--account-card-border);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-dashboard-main :is(.pn-bookings-panel,.pn-notification-history) { background: transparent !important; }
+:root[data-theme="dark"] .pn-user-dashboard :is(.pn-booking-tabs,.pn-filter-field) { background: #21161b !important; border-color: #67303a; }
+:root[data-theme="light"] .pn-user-dashboard :is(.pn-booking-tabs,.pn-filter-field) { background: #f0f0f3 !important; border-color: #d6d6db; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-booking-tabs button:not(.active) { background: transparent !important; color: var(--theme-ink) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-booking-tabs button.active span { background: #ffffff25 !important; color: #fff !important; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-slot-card::before { background: #df1023; }
+:root[data-theme="light"] .pn-user-dashboard .pn-slot-card::before { background: #19191c; }
+
+/* Complete surface coverage for standalone directory, account and transaction cards. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop,.module-page) :is(.pn-panel,.pn-user-panel,.pn-user-stat-card,.pn-user-feature-empty,.pn-empty-results,.pn-profile-card,.pn-form-card,.pn-slot-card,.pn-booking-item,.pn-notification-item,.pn-location-item,.pn-spot-modal-card,.pn-pay-card,.pn-pay-amount-banner,.pn-pay-lines,.pn-pay-summary > div,.module-card:not(.admin-module-card),.module-option,.user-profile-details) {
+  background: var(--account-card-gradient) !important;
+  border-color: var(--account-card-border);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-dashboard-main :is(.pn-user-panel,.pn-user-stat-card,.pn-user-feature-empty,.pn-empty-results,.pn-profile-card,.pn-form-card,.pn-location-item,.pn-pay-amount-banner,.pn-pay-lines,.pn-pay-summary > div,.pn-spot-modal-card,.pn-pay-card) {
+  background: var(--account-card-gradient) !important;
+  border-color: var(--account-card-border);
+}
+/* The outer parking card owns the gradient; inner bodies must not mask it. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard) .pn-slot-card .card-body,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-dashboard-main .pn-slot-card .card-body { background: transparent !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard) :is(.pn-booking-tabs,.pn-filter-field) {
+  background: var(--transaction-raised) !important; border-color: var(--account-card-border);
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard) .pn-booking-tabs button:not(.active) { background: transparent !important; color: var(--theme-ink) !important; }
+/* Bootstrap utility colors must not hide prices and headings in dark cards. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop) :is(.text-dark,.text-body,.text-black,.text-success,.text-danger,time) { color: var(--theme-ink) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop) :is(.pn-btn-book,.pn-btn-primary,.pn-btn-danger,.pn-pay-submit),
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop) :is(.pn-btn-book,.pn-btn-primary,.pn-btn-danger,.pn-pay-submit) :is(span,strong,small) { background-color: var(--transaction-accent); color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper { background: #fbfaf6 !important; }
+@media print {
+  :root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper,
+  :root:is([data-theme="dark"],[data-theme="light"]) .pn-pay-paper * { color: #19191c !important; background: #fff !important; }
+}
+
+/* Compact dark badges require their own foreground, independent of page text. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-scope,.pn-user-dashboard) :is(.pn-slot-id,.pn-vehicle-tag,.pn-user-saved-id,.pn-user-vehicle-icon,.pn-user-payment-icon,.pn-user-stat-icon,.pn-user-brand > span,.pn-user-save-spot) {
+  color: #fff !important;
+}
+:root[data-theme="light"] .pn-user-dashboard .pn-user-dashboard-main :is(.pn-slot-id,.pn-user-saved-id,.pn-user-vehicle-icon,.pn-user-payment-icon,.pn-user-stat-icon) { background: #242428 !important; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-brand > span { background: #242428 !important; }
+:root[data-theme="light"] :is(.pn-scope,.pn-user-dashboard) .pn-slot-card .pn-slot-id { background: #242428 !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-nav button.active,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-nav button.active :is(span,strong,small) { color: #fff !important; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-nav-indicator { background: #242428 !important; box-shadow: none; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-nav-indicator { background: linear-gradient(100deg,#6a1624,#34121a) !important; box-shadow: inset 0 0 0 1px #b32e43; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-nav button.active .pn-user-nav-icon { background: transparent !important; }
+
+/* Parking directory refinement: compact identity, consistent actions, calm surfaces. */
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card {
+  border-radius: 18px; overflow: hidden; transition: transform .2s ease,box-shadow .2s ease;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card::before { height: 2px; opacity: .5; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .card-body {
+  display: flex; flex-direction: column; padding: 24px !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-id {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 62px; min-height: 44px; padding: 10px 12px; border-radius: 12px;
+  font: 700 20px/1 'Inter','Segoe UI',sans-serif; letter-spacing: -.04em;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-vehicle-tag { padding: 7px 10px; font-size: 9px; letter-spacing: .06em; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card h2 { font-size: 16px; line-height: 1.45; letter-spacing: -.02em; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-area { font-size: 12px; line-height: 1.6; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-card-bottom {
+  margin-top: auto; display: flex !important; flex-wrap: wrap; gap: 16px;
+  border-top-color: var(--account-card-border); padding-top: 20px !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-card-bottom > strong { font-size: 21px !important; letter-spacing: -.04em; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-card-actions {
+  display: grid !important; grid-template-columns: minmax(0,1fr) auto; gap: 8px !important; width: 100%;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-slot-card-actions :is(button,.btn) {
+  border-radius: 10px !important; min-height: 40px; font-size: 12px; line-height: 1.4; padding: 10px 12px !important; margin: 0; box-shadow: none !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-btn-book { grid-column: 1 / -1; width: 100%; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .btn-outline-success { border-color: var(--account-card-border); background: transparent; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card .pn-user-save-spot { background: #29272c; border-color: #4b454d; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-parking-filters { padding: 16px; gap: 12px; border-radius: 16px; box-shadow: none; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) :is(.pn-search-field,.pn-filter-field) { border-radius: 10px; min-height: 58px; border: 1px solid var(--account-card-border); padding: 10px 12px; background: var(--theme-field) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-search-field input { width: 100%; font-size: 13px; min-width: 0; box-shadow: none; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-filter-field select { font-size: 13px; line-height: 1.5; }
+@media (hover:hover) and (pointer:fine) {
+  :root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-user-dashboard,.pn-scope) .pn-slot-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px #00000012 !important; }
+}
+@media (prefers-reduced-motion:reduce) { .pn-slot-card { transition: none !important; transform: none !important; } }
+
+/* One light card surface across public pages, account modules and dialogs. */
+:root[data-theme="light"] {
+  --account-card-gradient: linear-gradient(155deg,#fff 0%,#eeeef1 42%,#d9d9df 100%);
+  --account-card-border: #c5c5cd;
+}
+:root[data-theme="light"] .home-page :is(.feature-strip article,.why-grid article,.quote-grid article,.pricing-grid article,.pricing-grid .popular-plan,.home-parking-photo-card,.home-parking-photo-copy,.booking-bar),
+:root[data-theme="light"] :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop,.module-page,.user-portal) :is(.pn-panel,.pn-user-panel,.pn-user-stat-card,.pn-user-welcome-banner,.pn-user-inline-panel,.pn-profile-card,.pn-form-card,.pn-slot-card,.pn-booking-item,.pn-notification-item,.pn-location-item,.pn-user-feature-empty,.pn-empty-results,.pn-parking-filters,.pn-spot-modal-card,.pn-pay-card,.pn-pay-amount-banner,.pn-pay-lines,.pn-pay-summary > div,.pn-spot-detail-grid > span,.pn-booking-ref,.pn-booking-cancel-confirm,.module-card:not(.admin-module-card),.module-option,.user-profile-details,.pn-preview-account,.pn-account-option) {
+  background: var(--account-card-gradient) !important;
+  border-color: var(--account-card-border);
+}
+:root[data-theme="light"] .pn-modern-login.pn-robot-login .pn-login-form-wrap,
+:root[data-theme="light"] .pn-user-dashboard .pn-user-dashboard-main :is(.pn-user-panel,.pn-user-stat-card,.pn-user-welcome-banner,.pn-user-inline-panel,.pn-profile-card,.pn-form-card,.pn-slot-card,.pn-booking-item,.pn-notification-item,.pn-location-item,.pn-user-feature-empty,.pn-empty-results,.pn-parking-filters,.pn-spot-modal-card,.pn-pay-card,.pn-pay-amount-banner,.pn-pay-lines,.pn-pay-summary > div) {
+  background: var(--account-card-gradient) !important; border-color: var(--account-card-border);
+}
+:root[data-theme="light"] .pn-pay-paper { background: var(--account-card-gradient) !important; }
+/* Secondary copy remains dark enough at the darkest point of the gradient. */
+:root[data-theme="light"] :is(.pn-scope,.pn-user-dashboard,.pn-pay-backdrop,.home-page) :is(time,.text-muted,.text-secondary) { color: #35353b !important; }
+:root[data-theme="light"] .pn-pay-paper :is(header,strong,span,div,dt,dd,b,small,p) { color: #19191c !important; }
+@media print {
+  :root[data-theme="light"] .pn-pay-paper { background: #fff !important; }
+}
+
+/* Shared focus and touch sizing without changing module layouts or themes. */
+:is(.pn-scope,.pn-user-dashboard,.pn-pay-card) :is(button,input,select,textarea) { font-family: var(--site-body-font); }
+:is(.pn-scope,.pn-user-dashboard,.pn-pay-card) button:not(:disabled) { cursor: pointer; }
+:is(.pn-scope,.pn-user-dashboard,.pn-pay-card) button:disabled { cursor: not-allowed; }
+:is(.pn-scope,.pn-user-dashboard,.pn-pay-card) :is(button,a,input,select,textarea):focus-visible { outline: 2px solid var(--theme-ink); outline-offset: 3px; }
+.pn-spot-modal,.pn-pay-backdrop { overscroll-behavior: contain; }
+.pn-spot-modal-card,.pn-pay-card { overflow-wrap: anywhere; }
+.pn-booking-form :is(input,select),.pn-pay-field :is(input,select) { min-height: 46px; }
+.pn-booking-form label,.pn-pay-field { line-height: 1.6; }
+.pn-pay-error { display: block; line-height: 1.5; margin-top: 4px; }
+@media (max-width:600px) {
+  .pn-booking-form :is(input,select),.pn-pay-field :is(input,select) { font-size: 16px; }
+  .pn-spot-modal-close,.pn-pay-close { min-width: 44px; min-height: 44px; }
+  .pn-pay-paper-rows dd { max-width: 65%; }
+}
+
+/* Glossy navigation with opaque fallback and a restrained glass highlight. */
+:root[data-theme="dark"] .home-page .home-nav {
+  background: linear-gradient(180deg,#ffffff10 0%,#ffffff04 46%,#00000008 48%,#00000028 100%),#111113f2 !important;
+  border-top: 1px solid #ffffff20; border-bottom: 1px solid #ffffff16;
+  box-shadow: inset 0 1px 0 #ffffff12,0 8px 24px #00000035;
+}
+:root[data-theme="light"] .home-page .home-nav {
+  background: linear-gradient(180deg,#ffffffed 0%,#ffffff80 46%,#ececf040 48%,#dddde340 100%),#f3f3f6f2 !important;
+  border-top: 1px solid #fff; border-bottom: 1px solid #c9c9d280;
+  box-shadow: inset 0 1px 0 #fff,0 8px 24px #0000000c;
+}
+@supports ((backdrop-filter:blur(16px)) or (-webkit-backdrop-filter:blur(16px))) {
+  :root:is([data-theme="dark"],[data-theme="light"]) .home-page .home-nav { backdrop-filter: blur(16px) saturate(125%); -webkit-backdrop-filter: blur(16px) saturate(125%); }
+}
+:root[data-theme="dark"] .home-page .nav-login { background: linear-gradient(180deg,#ff344a,#dd0b22 60%,#c4081c) !important; box-shadow: inset 0 1px 0 #ffffff35,0 4px 12px #cf0c2325; }
+:root[data-theme="light"] .home-page .nav-login { background: linear-gradient(180deg,#38383f,#19191c) !important; box-shadow: inset 0 1px 0 #ffffff25,0 4px 12px #00000015; }
+@media (prefers-reduced-transparency:reduce) {
+  :root[data-theme="dark"] .home-page .home-nav { background: #151517 !important; backdrop-filter: none; }
+  :root[data-theme="light"] .home-page .home-nav { background: #f5f5f7 !important; backdrop-filter: none; }
+}
+
+/* Flat, quiet sidebar: active state belongs to the button rather than an animated orb. */
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar { background: #101012 !important; border-right: 1px solid #30252a; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar { background: #f6f6f8 !important; border-right: 1px solid #dddde3; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar { box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar::after { display: none; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar .pn-user-nav-indicator { display: none; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar .pn-user-nav { gap: 6px; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar .pn-user-nav button {
+  border: 1px solid transparent; border-radius: 10px; box-shadow: none;
+  font-size: 13px; font-weight: 500; transition: background-color .18s ease,border-color .18s ease;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar .pn-user-nav button .pn-user-nav-icon {
+  transform: none !important; background: transparent !important; box-shadow: none; border-radius: 0;
+}
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active { background: #30151d; border-color: #662b39; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active :is(span,strong) { color: #fff !important; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active .pn-user-nav-icon { color: #ff6c7f !important; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active { background: #e4e4e9; border-color: #d1d1d9; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active,
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button.active :is(span,strong) { color: #151518 !important; }
+:root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button .pn-user-nav-badge { background: #d8d8df !important; color: #151518 !important; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button .pn-user-nav-badge { background: #542431 !important; color: #fff !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-user-sidebar .pn-user-label { font-size: 10px; letter-spacing: .12em; margin-bottom: 16px; }
+@media (hover:hover) and (pointer:fine) {
+  :root[data-theme="light"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button:not(.active):hover { background: #ededf1; }
+  :root[data-theme="dark"] .pn-user-dashboard .pn-user-sidebar .pn-user-nav button:not(.active):hover { background: #201a1e; }
+}
+
+/* Equal pricing-button feedback for every plan, without changing card geometry. */
+:root[data-theme="dark"] .home-page .pricing-grid article button { border: 1px solid #555057; }
+:root[data-theme="dark"] .home-page .pricing-grid article button:is(:hover,:focus-visible,:active) {
+  border-color: #ef233c !important; box-shadow: inset 0 0 0 1px #ef233c,0 0 0 2px #ef233c14 !important;
+  outline: none;
+}
+:root[data-theme="light"] .home-page .pricing-grid article button:is(:hover,:focus-visible,:active) {
+  border-color: #19191c !important; box-shadow: inset 0 0 0 1px #74747d,0 0 0 2px #19191c15 !important;
+  outline: none;
+}
+
+/* Dark dashboard status chips need light foregrounds in either page theme. */
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard :is(.pn-location-pin,.pn-seat-count,.pn-user-confirmed),
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard :is(.pn-location-pin,.pn-seat-count,.pn-user-confirmed) :is(span,strong,b,small) {
+  color: #fff !important;
+}
+:root[data-theme="light"] .pn-user-dashboard .pn-location-pin { background: #252529 !important; }
+:root[data-theme="light"] .pn-user-dashboard :is(.pn-seat-count,.pn-user-confirmed) { background: #253f34 !important; border-color: #3d6150; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-location-pin { background: #3b1923 !important; }
+:root[data-theme="dark"] .pn-user-dashboard :is(.pn-seat-count,.pn-user-confirmed) { background: #203d30 !important; border-color: #3d6150; }
+
+/* Chart center follows the page theme instead of retaining a dark inset. */
+:root[data-theme="light"] .pn-user-dashboard .pn-pie-chart > div {
+  background: #f5f5f7 !important; color: #151518 !important;
+  box-shadow: 0 4px 14px #0000000c,inset 0 0 0 1px #d1d1d9;
+}
+:root[data-theme="light"] .pn-user-dashboard .pn-pie-chart > div :is(strong,span) { color: #151518 !important; }
+:root[data-theme="dark"] .pn-user-dashboard .pn-pie-chart > div {
+  background: #171214 !important; color: #fff !important;
+  box-shadow: 0 4px 14px #0003,inset 0 0 0 1px #59343f;
+}
+:root[data-theme="dark"] .pn-user-dashboard .pn-pie-chart > div :is(strong,span) { color: #fff !important; }
+
+/* Live availability shares the established card palette and foregrounds. */
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-availability :is(.pn-live-hero,.pn-live-filters,.pn-live-summary,.pn-live-location,.pn-live-hero-count,.pn-capacity-visual) {
+  background: var(--account-card-gradient) !important; border-color: var(--account-card-border); color: var(--theme-ink) !important;
+}
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-availability :is(.pn-live-hero,.pn-live-hero-count) :is(h2,p,span,strong,small,b,button) { color: var(--theme-ink) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-hero::before,
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-hero::after { opacity: .08; }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-hero-orbit { border-color: var(--account-card-border); }
+:root:is([data-theme="dark"],[data-theme="light"]) .pn-user-dashboard .pn-live-refresh { background: var(--theme-field); border-color: var(--account-card-border); }

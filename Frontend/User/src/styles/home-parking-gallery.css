@@ -1,0 +1,29 @@
+/* Home page photography; kept separate from dashboard styling. */
+.home-page > .home-parking-gallery { padding: 72px max(24px, calc((100vw - 1120px) / 2)); background: #11161d; color: #f0f5f7; }
+.home-parking-gallery, .home-parking-gallery * { box-sizing: border-box; }
+.home-parking-gallery-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 28px; }
+.home-parking-gallery-heading .section-kicker { margin: 0 0 12px; color: #a8ebcf; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.home-parking-gallery-heading h2 { margin: 0; color: #f0f5f7; font-size: clamp(26px, 3.2vw, 40px); font-weight: 600; line-height: 1.15; letter-spacing: -.04em; }
+.home-parking-gallery-heading > p { max-width: 270px; margin: 0; color: #a8b6c1; font-size: 13px; line-height: 1.7; }
+.home-parking-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.home-parking-photo-card { min-width: 0; overflow: hidden; border: 1px solid #ffffff14; border-radius: 18px; background: #19222c; }
+.home-parking-photo-wrap { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #253440; }
+.home-parking-photo-wrap::after { position: absolute; inset: 0; content: ""; pointer-events: none; background: linear-gradient(180deg, #0002, transparent 45%, #0007); }
+.home-parking-photo-wrap img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.home-parking-photo-card:hover img { transform: scale(1.025); }
+.home-parking-photo-label { position: absolute; z-index: 1; top: 18px; left: 18px; padding: 8px 10px; border: 1px solid #ffffff40; border-radius: 6px; color: #fff; background: #18221dc9; font-size: 8px; font-weight: 600; letter-spacing: .12em; }
+.home-parking-photo-caption { position: absolute; bottom: 12px; right: 14px; z-index: 1; color: #fff; font-size: 9px; }
+.home-parking-photo-copy { padding: 24px; }
+.home-parking-photo-copy h3 { color: #f0f5f7; font-size: 20px; font-weight: 600; line-height: 1.35; letter-spacing: -.025em; margin: 0 0 10px; }
+.home-parking-photo-copy p { color: #a9bac7; font-size: 13px; line-height: 1.7; margin: 0 0 20px; }
+.home-parking-photo-copy a { display: inline-flex; align-items: center; gap: 16px; color: #b6ebd3; font-size: 12px; font-weight: 600; text-decoration: none; }
+.home-parking-photo-copy a:hover { color: #ddffed; }
+.home-parking-photo-copy a:focus-visible { outline: 2px solid #a8ebcf; outline-offset: 5px; }
+@media (max-width: 680px) {
+  .home-page > .home-parking-gallery { padding: 48px 20px; }
+  .home-parking-gallery-heading { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .home-parking-gallery-heading > p { max-width: none; }
+  .home-parking-photo-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .home-parking-photo-copy { padding: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .home-parking-photo-wrap img { transition: none; } .home-parking-photo-card:hover img { transform: none; } }

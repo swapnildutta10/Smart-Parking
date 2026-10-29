@@ -1,128 +1,148 @@
 import React from "react";
+import BrandLogo from "../features/shared/BrandLogo";
 import UserLogin from "../features/auth/UserLogin";
+import { authRequest } from "../features/auth/authApi";
 import UserDashboard from "../features/home/UserDashboard";
 import HomeHero from "../features/home/HomeHero";
+import HomeParkingGallery from "../features/home/HomeParkingGallery";
 import ParkingDirectory from "../features/parkingSpot/ParkingDirectory";
-import { createNotification } from "../features/notification/notificationUtils";
+import { parkingRequest, bookingWindow } from "../features/parkingSpot/parkingApi";
+import { subscribeToAvailability } from "../features/parkingSpot/availabilityEvents";
 
-const PAYMENT_STORAGE_KEY = "parknova-payment-history";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 function App() {
   const [started, setStarted] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
+  const [signupError, setSignupError] = React.useState("");
+  const [isRegistering, setIsRegistering] = React.useState(false);
   const [lampOn, setLampOn] = React.useState(false);
   // "user" | "userHome" | null (null = not viewing the login flow)
   const [authView, setAuthView] = React.useState(null);
   const [authRole, setAuthRole] = React.useState(null);
+  const [authUser, setAuthUser] = React.useState(null);
   const [darkMode, setDarkMode] = React.useState(
-    () => localStorage.getItem("parkly-theme") === "dark",
+    () => localStorage.getItem("parkly-theme") !== "light",
   );
   const [themeAnimating, setThemeAnimating] = React.useState(false);
-  // Booking history lives here (not inside UserDashboard/ParkingDirectory)
-  // so a reservation made from either screen shows up in "My bookings" on
-  // both. Frontend-only for now: no backend, so this resets on reload.
-  const [bookings, setBookings] = React.useState([
-    {
-      id: "PN-A24T01",
-      spotId: "A-24",
-      location: "Brainware University Main Gate",
-      area: "University district",
-      vehicle: "Car",
-      rate: 13,
-      vehiclePlate: "",
-      date: new Date().toISOString().slice(0, 10),
-      time: "16:30",
-      duration: 3,
-      status: "upcoming",
-      parked: false,
-      createdAt: Date.now() - 1000 * 60 * 60,
-    },
-  ]);
+  const [bookings, setBookings] = React.useState([]);
+  const [bookingsError, setBookingsError] = React.useState("");
+  const [bookingsLoading, setBookingsLoading] = React.useState(false);
+  const [parkingSlots, setParkingSlots] = React.useState([]);
+  const [parkingError, setParkingError] = React.useState("");
+  const [parkingLoading, setParkingLoading] = React.useState(true);
+  const sessionUser = React.useRef(null);
+  sessionUser.current = authUser?.id || null;
+  const parkingVersion = React.useRef(0);
+  const reloadParking = React.useCallback(async () => {
+    const version = ++parkingVersion.current;
+    try {
+      const result = await parkingRequest("/parking");
+      if (version === parkingVersion.current) { setParkingSlots(result.parking); setParkingError(""); }
+    } catch (error) { if (version === parkingVersion.current) setParkingError(error.message); }
+    finally { if (version === parkingVersion.current) setParkingLoading(false); }
+  }, []);
+  React.useEffect(() => {
+    reloadParking();
+    const unsubscribe = subscribeToAvailability(reloadParking);
+    const timer = window.setInterval(reloadParking, 30000);
+    return () => { unsubscribe(); window.clearInterval(timer); };
+  }, [reloadParking]);
+  React.useEffect(() => {
+    setBookings([]);
+    setPayments([]);
+    setNotifications([]);
+    setBookingsError("");
+    setBookingsLoading(Boolean(authUser?.id));
+    if (!authUser?.id) return undefined;
+    const controller = new AbortController();
+    const load = () => Promise.allSettled([
+      parkingRequest("/bookings", { signal: controller.signal })
+        .then(result => { if (!controller.signal.aborted) { setBookings(result.bookings); setBookingsError(""); } })
+        .catch(error => { if (!controller.signal.aborted) setBookingsError(error.message); })
+        .finally(() => { if (!controller.signal.aborted) setBookingsLoading(false); }),
+      parkingRequest("/payments", { signal: controller.signal })
+        .then(result => { if (!controller.signal.aborted) { setPayments(result.payments); setPaymentError(""); } })
+        .catch(error => { if (!controller.signal.aborted) setPaymentError(error.message); }),
+    ]);
+    load();
+    const timer = window.setInterval(load, 30000);
+    return () => { controller.abort(); window.clearInterval(timer); };
+  }, [authUser?.id]);
   // Payments live here too (same reason as bookings) so receipts and
   // paid/unpaid status survive switching between dashboard views.
-  const [payments, setPayments] = React.useState(() => {
+  const [payments, setPayments] = React.useState([]);
+  const [paymentError, setPaymentError] = React.useState("");
+  const [notifications, setNotifications] = React.useState([]);
+  const [notificationsLoading, setNotificationsLoading] = React.useState(false);
+  const [notificationsError, setNotificationsError] = React.useState("");
+  const reloadNotifications = React.useCallback(async (signal) => {
+    const account = authUser?.id;
+    if (!account) return;
     try {
-      const savedPayments = JSON.parse(localStorage.getItem(PAYMENT_STORAGE_KEY) || "[]");
-      return Array.isArray(savedPayments) ? savedPayments : [];
-    } catch {
-      return [];
+      const result = await parkingRequest("/notifications", { signal });
+      if (!signal?.aborted && sessionUser.current === account) { setNotifications(result.notifications); setNotificationsError(""); }
+    } catch (error) {
+      if (!signal?.aborted && sessionUser.current === account) setNotificationsError(error.message);
+    } finally {
+      if (!signal?.aborted && sessionUser.current === account) setNotificationsLoading(false);
     }
-  });
-  const [notifications, setNotifications] = React.useState(() => [
-    createNotification({
-      id: "PN-A24T01",
-      spotId: "A-24",
-      location: "Brainware University Main Gate",
-      date: new Date().toISOString().slice(0, 10),
-      time: "16:30",
-    }, "reserved", Date.now() - 1000 * 60 * 60),
-  ]);
-
-  const addNotification = React.useCallback(({ booking, kind }) => {
-    const notification = createNotification(booking, kind);
-    setNotifications((current) => current.some((item) => item.id === notification.id)
-      ? current
-      : [notification, ...current]);
-  }, []);
-
+  }, [authUser?.id]);
   React.useEffect(() => {
-    localStorage.setItem(PAYMENT_STORAGE_KEY, JSON.stringify(payments));
-  }, [payments]);
+    setNotifications([]); setNotificationsError("");
+    setNotificationsLoading(Boolean(authUser?.id));
+    if (!authUser?.id) return undefined;
+    const controller = new AbortController();
+    const load = () => reloadNotifications(controller.signal);
+    load();
+    const timer = window.setInterval(load, 30000);
+    window.addEventListener("focus", load);
+    return () => { controller.abort(); window.clearInterval(timer); window.removeEventListener("focus", load); };
+  }, [authUser?.id, reloadNotifications]);
 
-  function addBooking(draft) {
-    const booking = {
-      ...draft,
-      id: `PN-${Date.now().toString(36).toUpperCase().slice(-6)}`,
-      status: "upcoming",
-      parked: false,
-      createdAt: Date.now(),
-    };
-    setBookings((current) => [...current, booking]);
-    addNotification({ booking, kind: "reserved" });
+
+  async function addBooking(draft) {
+    if (!authUser) throw new Error("Sign in to reserve parking.");
+    const currentUser = authUser.id;
+    const { booking } = await parkingRequest("/bookings", { method: "POST", body: {
+      inventory_id: draft.inventoryId, vehicle_plate: draft.vehiclePlate, request_id: draft.requestId,
+      ...bookingWindow(draft.date, draft.time, draft.duration),
+    } });
+    if (sessionUser.current === currentUser) {
+      setBookings(current => [booking, ...current.filter(b => b.id !== booking.id)]);
+      reloadNotifications();
+    }
+    reloadParking();
     return booking;
   }
 
   function addPayment(payment) {
-    const paymentRecord = {
-      ...payment,
-      customerName: payment.customerName || "Olivia Martin",
-      customerEmail: payment.customerEmail || "olivia@example.com",
-    };
-
+    if (!authUser || payment.customerEmail !== authUser.email) return;
     setPayments((current) => (
-      current.some((item) => item.bookingId === paymentRecord.bookingId && item.status === "paid")
+      current.some((item) => item.id === payment.id)
         ? current
-        : [paymentRecord, ...current]
+        : [payment, ...current]
     ));
   }
 
-  function cancelBooking(bookingId) {
-    const booking = bookings.find((item) => item.id === bookingId);
-    // Cancelling a paid booking refunds its payment.
-    setPayments((current) => current.map((payment) => (
-      payment.bookingId === bookingId && payment.status === "paid"
-        ? { ...payment, status: "refunded", refundedAt: Date.now() }
-        : payment
-    )));
-    setBookings((current) =>
-      current.map((booking) => (
-        booking.id === bookingId ? { ...booking, status: "cancelled" } : booking
-      )),
-    );
-    if (booking) {
-      addNotification({ booking, kind: "cancelled" });
+  async function cancelBooking(bookingId) {
+    const currentUser = sessionUser.current;
+    const { booking } = await parkingRequest(`/bookings/${encodeURIComponent(bookingId)}/cancel`, { method: "PATCH" });
+    if (sessionUser.current === currentUser) {
+      setBookings(current => current.map(item => item.id === bookingId ? booking : item));
+      setPayments(current => current.map(item => item.bookingId === bookingId && item.status === "paid"
+        ? { ...item, status: "refunded" } : item));
+      reloadNotifications();
     }
+    reloadParking();
   }
 
-  function markBookingParked(bookingId) {
-    const booking = bookings.find((item) => item.id === bookingId);
-    setBookings((current) =>
-      current.map((booking) => (
-        booking.id === bookingId ? { ...booking, parked: true } : booking
-      )),
-    );
-    if (booking) {
-      addNotification({ booking, kind: "parked" });
+  async function markBookingParked(bookingId) {
+    const currentUser = sessionUser.current;
+    const { booking } = await parkingRequest(`/bookings/${encodeURIComponent(bookingId)}/check-in`, { method: "PATCH" });
+    if (sessionUser.current === currentUser) {
+      setBookings(current => current.map(item => item.id === bookingId ? booking : item));
+      reloadNotifications();
     }
   }
 
@@ -160,13 +180,52 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    const token = localStorage.getItem("parknova-auth-token");
+    if (!token) return undefined;
+    let cancelled = false;
+    fetch(`${API_URL}/users/profile`, { headers: { Authorization: `Bearer ${token}` } })
+      .then(async (response) => {
+        const result = await response.json();
+        if (!response.ok) throw Object.assign(new Error(result.message || "Session expired."), { status: response.status });
+        if (!cancelled) {
+          setAuthUser(result.user);
+          setAuthRole("user");
+          setAuthView("userHome");
+          window.history.replaceState({ authView: "userHome" }, "", "#userHome");
+        }
+      })
+      .catch((error) => {
+        if (!cancelled && [401, 403].includes(error.status)) localStorage.removeItem("parknova-auth-token");
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  React.useEffect(() => {
     document.documentElement.dataset.theme = darkMode ? "dark" : "light";
     localStorage.setItem("parkly-theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setSubmitted(true);
+    if (isRegistering) return;
+    const formData = new FormData(event.currentTarget);
+    const firstName = String(formData.get("firstName") || "").trim();
+    const lastName = String(formData.get("lastName") || "").trim();
+    setIsRegistering(true);
+    setSignupError("");
+    try {
+      await authRequest("register", {
+          name: `${firstName} ${lastName}`.trim(),
+          email: formData.get("email"),
+          password: formData.get("password"),
+      });
+      setSignupError("");
+      setSubmitted(true);
+    } catch (error) {
+      setSignupError(error.message || "Could not reach the server. Check that the backend is running.");
+    } finally {
+      setIsRegistering(false);
+    }
   }
 
   function handleThemeToggle() {
@@ -244,6 +303,7 @@ function App() {
           </article>
         </div>
       </section>
+      <HomeParkingGallery />
       <section className="quote-section">
         <div className="section-heading light-heading">
           <p className="section-kicker">Loved by drivers</p>
@@ -304,7 +364,7 @@ function App() {
         <div className="pricing-grid">
           <article>
             <strong>
-              <sup>$</sup>30<small>/day</small>
+              <sup>₹</sup>30<small>/day</small>
             </strong>
             <h3>Premium</h3>
             <p>All the services you need for effortless parking.</p>
@@ -312,7 +372,7 @@ function App() {
           </article>
           <article>
             <strong>
-              <sup>$</sup>18<small>/day</small>
+              <sup>₹</sup>18<small>/day</small>
             </strong>
             <h3>Standard</h3>
             <p>Unlimited time and a regular parking spot.</p>
@@ -321,7 +381,7 @@ function App() {
           <article className="popular-plan">
             <span>Most popular</span>
             <strong>
-              <sup>$</sup>13<small>/day</small>
+              <sup>₹</sup>13<small>/day</small>
             </strong>
             <h3>Basic</h3>
             <p>A flexible plan for short stays and easy trips.</p>
@@ -329,7 +389,7 @@ function App() {
           </article>
           <article>
             <strong>
-              <sup>$</sup>6<small>/day</small>
+              <sup>₹</sup>6<small>/day</small>
             </strong>
             <h3>Economy</h3>
             <p>A simple spot for parking when you arrive.</p>
@@ -339,8 +399,8 @@ function App() {
       </section>
       <footer className="home-footer" id="contact">
         <div className="footer-brand-block">
-          <a className="home-brand footer-brand" href="#top">
-            ParkNova
+          <a className="home-brand footer-brand pn-brand-link" href="#top">
+            <BrandLogo />
           </a>
           <p>
             Official providers of smart city parking.
@@ -390,19 +450,33 @@ function App() {
     // to separate pages for those options.
     return (
       <UserDashboard
+        parkingSlots={parkingSlots}
+        parkingError={parkingError}
+        parkingLoading={parkingLoading}
+        onRetryParking={reloadParking}
+        user={authUser}
+        onUpdateUser={setAuthUser}
         onLogin={() => navigateTo("user")}
         onLogout={() => {
           setAuthRole(null);
+          setAuthUser(null);
+          localStorage.removeItem("parknova-auth-token");
+          localStorage.removeItem("parknova-google-user");
           navigateTo(null);
         }}
         bookings={bookings}
+        bookingsError={bookingsError}
+        bookingsLoading={bookingsLoading}
         notifications={notifications}
+        notificationsLoading={notificationsLoading}
+        notificationsError={notificationsError}
+        onReloadNotifications={() => reloadNotifications()}
         payments={payments}
+        paymentError={paymentError}
         onAddPayment={addPayment}
         onAddBooking={addBooking}
         onCancelBooking={cancelBooking}
         onMarkParked={markBookingParked}
-        onAddNotification={addNotification}
       />
     );
   }
@@ -410,7 +484,8 @@ function App() {
     if (authRole !== "user") {
       return (
         <UserLogin
-          onLoginSuccess={() => {
+          onLoginSuccess={(user) => {
+            setAuthUser(user);
             setAuthRole("user");
             navigateTo("parking");
           }}
@@ -423,10 +498,17 @@ function App() {
     }
     return (
       <ParkingDirectory
+        parkingSlots={parkingSlots}
+        parkingError={parkingError}
+        parkingLoading={parkingLoading}
+        onRetryParking={reloadParking}
         onBack={() => navigateTo("userHome")}
         onLogin={() => navigateTo("user")}
         onLogout={() => {
           setAuthRole(null);
+          setAuthUser(null);
+          localStorage.removeItem("parknova-auth-token");
+          localStorage.removeItem("parknova-google-user");
           navigateTo(null);
         }}
         bookings={bookings}
@@ -438,7 +520,8 @@ function App() {
   if (authView === "user") {
     return (
       <UserLogin
-        onLoginSuccess={() => {
+        onLoginSuccess={(user) => {
+          setAuthUser(user);
           setAuthRole("user");
           navigateTo("userHome");
           setStarted(false);
@@ -457,8 +540,7 @@ function App() {
 
   return (
     <main className="lamp-signup" data-lamp-on={lampOn}>
-      <a className="lamp-signup-brand" href="#home" aria-label="ParkNova home">
-        ParkNova
+      <a className="lamp-signup-brand pn-brand-link" href="#home" aria-label="ParkNova home"><BrandLogo />
       </a>
       <div className="lamp-signup-layout">
         <section className="lamp-stage" aria-label="Signup lamp">
@@ -505,20 +587,20 @@ function App() {
                 <div className="lamp-name-fields">
                   <label>
                     First name
-                    <input required type="text" placeholder="Olivia" autoComplete="given-name" />
+                    <input required name="firstName" type="text" placeholder="Olivia" autoComplete="given-name" />
                   </label>
                   <label>
                     Last name
-                    <input required type="text" placeholder="Martin" autoComplete="family-name" />
+                    <input required name="lastName" type="text" placeholder="Martin" autoComplete="family-name" />
                   </label>
                 </div>
                 <label>
                   Email address
-                  <input required type="email" placeholder="olivia@example.com" autoComplete="email" />
+                  <input required name="email" type="email" placeholder="olivia@example.com" autoComplete="email" />
                 </label>
                 <label>
                   Password
-                  <input required minLength="8" type="password" placeholder="At least 8 characters" autoComplete="new-password" />
+                  <input required name="password" minLength="8" type="password" placeholder="At least 8 characters" autoComplete="new-password" />
                 </label>
                 <label className="lamp-terms">
                   <input required type="checkbox" />
@@ -527,8 +609,9 @@ function App() {
                     <a href="#privacy">Privacy Policy</a>.
                   </span>
                 </label>
-                <button className="lamp-create-button" type="submit">
-                  Create account <span aria-hidden="true">→</span>
+                {signupError && <p className="pn-form-error" role="alert">{signupError}</p>}
+                <button className="lamp-create-button" type="submit" disabled={isRegistering}>
+                  {isRegistering ? "Creating account…" : "Create account"} <span aria-hidden="true">→</span>
                 </button>
               </form>
               <p className="lamp-login-prompt">
@@ -553,9 +636,13 @@ function App() {
               <button
                 className="lamp-create-button"
                 type="button"
-                onClick={() => setSubmitted(false)}
+                onClick={() => {
+                  setSubmitted(false);
+                  setStarted(false);
+                  navigateTo("user");
+                }}
               >
-                Back to registration <span aria-hidden="true">→</span>
+                Log in to your account <span aria-hidden="true">→</span>
               </button>
             </div>
           )}

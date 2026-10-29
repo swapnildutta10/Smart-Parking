@@ -1,38 +1,12 @@
 import React from "react";
+import ParkingSpotFields from "./ParkingSpotFields";
 
-function AddParkingSpot({ onAdd }) {
-  return (
-    <form className="pn-admin-spot-form" onSubmit={onAdd}>
-      <label>
-        Spot ID
-        <input name="spotId" placeholder="A-24" required />
-      </label>
-      <label>
-        Vehicle type
-        <select name="vehicleType" defaultValue="Car">
-          <option>Car</option>
-          <option>Two wheeler</option>
-          <option>SUV / Van</option>
-          <option>EV</option>
-        </select>
-      </label>
-      <label>
-        Location
-        <input name="location" placeholder="Parking location" required />
-      </label>
-      <label>
-        Rate per day
-        <input name="rate" type="number" min="1" placeholder="13" required />
-      </label>
-      <label>
-        Spaces available
-        <input name="available" type="number" min="1" placeholder="4" required />
-      </label>
-      <button className="pn-admin-submit" type="submit">
-        Add parking spot <span aria-hidden="true">+</span>
-      </button>
-    </form>
-  );
+export default function AddParkingSpot({ onAdd, busy, disabled, locations }) {
+  return <form className="pn-admin-spot-form" onSubmit={onAdd}>
+    <fieldset disabled={busy || disabled} style={{ border: 0, padding: 0, margin: 0, minWidth: 0, display: "contents" }}>
+      <p>Spot IDs are assigned automatically when you save.</p>
+      <ParkingSpotFields locations={locations} />
+      <button className="pn-admin-submit" type="submit">{busy ? "Saving…" : "Add parking spot"} <span aria-hidden="true">+</span></button>
+    </fieldset>
+  </form>;
 }
-
-export default AddParkingSpot;

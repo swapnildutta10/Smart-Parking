@@ -1,17 +1,22 @@
+import BrandLogo from "../shared/BrandLogo";
 import React from "react";
-import { MEMBER_CREDENTIALS } from "./authCredentials";
-
+import { authRequest } from "./authApi";
+import CaptchaChallenge from "./CaptchaChallenge";
 const STRENGTH_LABELS = ["NOT LOOKING", "TOO SHORT", "GETTING THERE", "STRONG", "FORT KNOX"];
 
 function UserLogin({ onGoToRegister, onLoginSuccess }) {
+  const [previewAccount, setPreviewAccount] = React.useState({ name: "Alex Morgan", email: "alex.morgan@example.com", initials: "AM" });
+  const [googleStatus, setGoogleStatus] = React.useState("idle");
   const [submitted, setSubmitted] = React.useState(false);
   const [remember, setRemember] = React.useState(false);
   const [memberId, setMemberId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [captcha, setCaptcha] = React.useState({ id: "", answer: "" });
+  const [captchaRefresh, setCaptchaRefresh] = React.useState(0);
   const [shake, setShake] = React.useState(false);
-  const [showGoogleDemo, setShowGoogleDemo] = React.useState(false);
   const [robotMood, setRobotMood] = React.useState("idle");
   const [robotMessage, setRobotMessage] = React.useState("Hi. I'm Volt. I guard this form.");
   const [robotTurned, setRobotTurned] = React.useState(false);
@@ -24,57 +29,63 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
   if (/[^a-zA-Z0-9]/.test(password)) passwordStrength += 1;
   if (password.length > 0 && passwordStrength === 0) passwordStrength = 1;
 
-  function say(message) {
+  const say = React.useCallback((message) => {
     setRobotMessage(message);
-  }
+  }, []);
 
-  function finishLogin(callback) {
+  const finishLogin = React.useCallback((callback, delay = 420) => {
     setSubmitted(true);
     setRobotTurned(false);
     setRobotMood("success");
     say("Access granted. Welcome to ParkNova.");
-    if (callback) window.setTimeout(callback, 420);
-  }
+    if (callback) window.setTimeout(callback, delay);
+  }, [say]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const isValid =
-      memberId.trim() === MEMBER_CREDENTIALS.id &&
-      password === MEMBER_CREDENTIALS.password;
-
-    if (!isValid) {
-      setError("That ID or password doesn't match a ParkNova account.");
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const result = await authRequest("login", { email: memberId.trim(), password, captchaId: captcha.id, captchaAnswer: captcha.answer });
+      localStorage.setItem("parknova-auth-token", result.token);
+      setError("");
+      finishLogin(() => onLoginSuccess?.(result.user));
+    } catch (loginError) {
+      setCaptcha({ id: "", answer: "" });
+      setCaptchaRefresh(value => value + 1);
+      setError(loginError.message || "Could not reach the server. Check that the backend is running.");
       setShake(true);
       setRobotTurned(false);
       setRobotMood("watching");
       say("Access denied. Check those details and try again.");
-      return;
+    } finally {
+      setIsSubmitting(false);
     }
-    setError("");
-
-    if (onLoginSuccess) {
-      finishLogin(onLoginSuccess);
-      return;
-    }
-    finishLogin();
   }
 
-  function handleGoogleDemoLogin() {
+  function handleGooglePreview() {
     setError("");
-    setShowGoogleDemo(true);
+    setGoogleStatus("choosing");
     setRobotTurned(false);
-    setRobotMood("happy");
-    say("Google demo verification is ready.");
+    setRobotMood("watching");
+    say("Choose a sample account to preview your dashboard.");
   }
 
-  function completeGoogleDemoLogin() {
-    setShowGoogleDemo(false);
-    if (onLoginSuccess) {
-      finishLogin(() => onLoginSuccess({ provider: "google-demo" }));
-      return;
-    }
-    finishLogin();
-  }
+  React.useEffect(() => {
+    if (googleStatus !== "verifying" && googleStatus !== "verified") return undefined;
+    const timer = window.setTimeout(() => {
+      if (googleStatus === "verifying") {
+        setGoogleStatus("verified");
+        setSubmitted(true);
+        setRobotMood("success");
+        say("All set. Opening your dashboard preview.");
+      } else {
+        onLoginSuccess?.({ ...previewAccount, provider: "preview", isPreview: true });
+      }
+    }, googleStatus === "verifying" ? 1000 : 1400);
+    return () => window.clearTimeout(timer);
+  }, [googleStatus, onLoginSuccess, previewAccount, say]);
 
   function handleRobotPointerMove(event) {
     if (robotTurned) return;
@@ -98,22 +109,9 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
   }
 
   return (
-    <div className="pn-scope pn-login pn-robot-login">
-      {showGoogleDemo && (
-        <div className="pn-demo-verification" role="dialog" aria-modal="true">
-          <div className="pn-demo-verification-card">
-            <div className="pn-demo-check" aria-hidden="true">✓</div>
-            <p className="pn-eyebrow">Google verification</p>
-            <h2>Verification successful</h2>
-            <p>Your demo Google account is ready. Continue to open ParkNova.</p>
-            <button className="pn-button-primary" type="button" onClick={completeGoogleDemoLogin}>
-              Continue <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="pn-login-brand">
-        <span>P</span> ParkNova
+    <div className="pn-scope pn-login pn-robot-login pn-modern-login">
+      <div className="pn-login-brand pn-brand-link">
+        <BrandLogo />
       </div>
 
       <aside className="pn-login-visual pn-anim-visual" aria-label="Volt, the ParkNova login robot">
@@ -175,16 +173,41 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
 
       <section className="pn-login-form-side">
         <div className="pn-login-form-wrap pn-anim-form-wrap">
-          {!submitted ? (
+          {googleStatus === "choosing" || googleStatus === "verifying" ? (
+            <div className="pn-account-preview">
+              <div className="pn-account-preview-top"><BrandLogo /><span className="pn-account-preview-tag">LOCAL PREVIEW</span></div>
+              <h1>{googleStatus === "verifying" ? "Getting things ready" : "Choose an account"}</h1>
+              <p>{googleStatus === "verifying" ? "Preparing your parking dashboard…" : "Continue to ParkNova with a sample profile."}</p>
+              {googleStatus === "choosing" ? (
+                <div className="pn-account-options">
+                  {[{ name: "Alex Morgan", email: "alex.morgan@example.com", initials: "AM" }, { name: "Sam Taylor", email: "sam.taylor@example.com", initials: "ST" }].map((account) => (
+                    <button type="button" key={account.email} className="pn-account-option" onClick={() => { setPreviewAccount(account); setGoogleStatus("verifying"); }}>
+                      <span className="pn-account-avatar" aria-hidden="true">{account.initials}</span>
+                      <span className="pn-account-copy"><strong>{account.name}</strong><small>{account.email}</small></span>
+                      <span aria-hidden="true">›</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="pn-account-loading" role="status">
+                  <span className="pn-account-loader" aria-hidden="true" />
+                  <strong>{previewAccount.name}</strong><small>{previewAccount.email}</small>
+                  <span>Preparing preview…</span>
+                </div>
+              )}
+              <p className="pn-account-disclosure">Sample accounts only. This preview does not connect to Google or request your password.</p>
+              <button type="button" className="pn-account-back" onClick={() => setGoogleStatus("idle")}>Back to login</button>
+            </div>
+          ) : !submitted ? (
             <>
               <p className="pn-eyebrow pn-anim-item" style={{ "--d": "0.05s" }}>
-                Driver access
+                YOUR NEXT SPOT STARTS HERE
               </p>
               <h1 className="pn-anim-item" style={{ "--d": "0.1s" }}>
-                Welcome, human. What brings you here today?
+                Welcome back.
               </h1>
               <p className="pn-sub pn-anim-item" style={{ "--d": "0.15s" }}>
-                Log in to manage your reservations and find your next spot.
+                Less searching. More arriving. Sign in to your parking space.
               </p>
 
               <form
@@ -194,11 +217,11 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                 onAnimationEnd={() => setShake(false)}
               >
                 <label className="pn-field">
-                  <span>Email or member ID</span>
+                  <span>Email address</span>
                   <input
                     required
-                    type="text"
-                    placeholder="olivia@example.com"
+                    placeholder="you@example.com"
+                    type="email"
                     value={memberId}
                     autoComplete="username"
                     aria-invalid={Boolean(error)}
@@ -261,7 +284,8 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                   </span>
                 </label>
 
-                {error && <p className="pn-form-error pn-anim-error">{error}</p>}
+                <CaptchaChallenge purpose="user" value={captcha} onChange={setCaptcha} refreshKey={captchaRefresh} disabled={isSubmitting} />
+                {error && <p className="pn-form-error pn-anim-error" role="alert">{error}</p>}
 
                 <div className="pn-form-row">
                   <label className="pn-checkbox">
@@ -280,6 +304,7 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                 <button
                   className="pn-button-primary"
                   type="submit"
+                  disabled={isSubmitting || !captcha.id || captcha.answer.trim().length !== 5}
                   onPointerDown={() => {
                     setRobotMood("pressed");
                     say("Beep. Do that again.");
@@ -300,7 +325,7 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                     if (!error) setRobotMood("excited");
                   }}
                 >
-                  Log in <span aria-hidden="true">→</span>
+                  {isSubmitting ? "Logging in…" : "Log in"} <span aria-hidden="true">→</span>
                 </button>
               </form>
 
@@ -308,14 +333,17 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                 <span>or</span>
               </div>
 
-              <button
-                className="pn-button-google pn-anim-item"
-                style={{ "--d": "0.3s" }}
-                type="button"
-                onClick={handleGoogleDemoLogin}
-              >
-                <span className="pn-google-mark">G</span> Continue with Google
-              </button>
+              <div className="pn-google-login-wrap pn-anim-item" style={{ "--d": "0.3s" }}>
+                <button type="button" className="pn-google-preview-button" onClick={handleGooglePreview}>
+                  <svg className="pn-google-preview-logo" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.5-.2-2.2H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.8 3-4.3 3-7.3Z" />
+                    <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.5L15.4 17c-.9.6-2 .9-3.4.9-2.6 0-4.9-1.8-5.7-4.2H3v2.6A10 10 0 0 0 12 22Z" />
+                    <path fill="#FBBC05" d="M6.3 13.7a6 6 0 0 1 0-3.4V7.7H3a10 10 0 0 0 0 8.6l3.3-2.6Z" />
+                    <path fill="#EA4335" d="M12 6.1c1.5 0 2.8.5 3.8 1.5l2.8-2.8A9.6 9.6 0 0 0 12 2a10 10 0 0 0-9 5.7l3.3 2.6c.8-2.4 3.1-4.2 5.7-4.2Z" />
+                  </svg>
+                  Continue with Google
+                </button>
+              </div>
 
               <p className="pn-foot-link pn-anim-item" style={{ "--d": "0.35s" }}>
                 Don&apos;t have an account?{" "}
@@ -333,7 +361,12 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
               </p>
             </>
           ) : (
-            <div className="pn-success pn-anim-success">
+            <div className={`pn-success pn-anim-success${googleStatus === "verified" ? " pn-preview-success" : ""}`}>
+              {googleStatus === "verified" && (
+                <p className="pn-google-verification is-verified" role="status">
+                  <span aria-hidden="true">✓</span> Google account verified
+                </p>
+              )}
               <svg
                 className="pn-success-check"
                 viewBox="0 0 64 64"
@@ -359,16 +392,23 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                 />
               </svg>
               <h2 className="pn-anim-item" style={{ "--d": "0.15s" }}>
-                Welcome back.
+                {googleStatus === "verified" ? "Verified" : "Welcome back."}
               </h2>
               <p className="pn-anim-item" style={{ "--d": "0.22s" }}>
-                Let&apos;s find you a better place to park today.
+                {googleStatus === "verified" ? "Your dashboard is getting ready." : "Let's find you a better place to park today."}
               </p>
+              {googleStatus === "verified" && (
+                <div className="pn-preview-transfer">
+                  <div className="pn-preview-account"><span aria-hidden="true">{previewAccount.initials}</span><div><strong>{previewAccount.name}</strong><small>Dashboard preview · No real Google verification</small></div></div>
+                  <div className="pn-preview-progress" aria-hidden="true"><span /></div>
+                  <p role="status">Taking you to your dashboard…</p>
+                </div>
+              )}
               <button
                 className="pn-button-primary pn-anim-item"
                 style={{ "--d": "0.3s" }}
                 type="button"
-                onClick={() => setSubmitted(false)}
+                onClick={() => { setSubmitted(false); setGoogleStatus("idle"); }}
               >
                 Back to login <span aria-hidden="true">→</span>
               </button>

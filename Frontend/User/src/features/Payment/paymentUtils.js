@@ -1,4 +1,4 @@
-// All money is handled in integer cents to avoid floating point drift.
+// Amounts are stored in integer paise to avoid floating point drift.
 
 export const TAX_RATE = 0.05;
 export const SERVICE_FEE_CENTS = 50;
@@ -10,12 +10,18 @@ export const PAYMENT_METHODS = [
   { key: "netbanking", label: "Net banking" },
   { key: "wallet", label: "Wallet" },
 ];
+export const UPI_APPS = [
+  { key: "gpay", label: "Google Pay", mark: "G", color: "#4285f4" },
+  { key: "phonepe", label: "PhonePe", mark: "पे", color: "#8854d0" },
+  { key: "paytm", label: "Paytm", mark: "P", color: "#00b9f1" },
+  { key: "other", label: "Other UPI", mark: "↗", color: "#67c7a5" },
+];
 export const BANKS = ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"];
 export const WALLETS = ["Paytm", "PhonePe", "Amazon Pay"];
 
 export function formatMoney(cents) {
   const sign = cents < 0 ? "-" : "";
-  return `${sign}$${(Math.abs(cents) / 100).toFixed(2)}`;
+  return `${sign}₹${(Math.abs(cents) / 100).toFixed(2)}`;
 }
 
 export function formatDate(dateString) {
@@ -35,22 +41,14 @@ function parseRate(rate) {
   return Number.parseFloat(String(rate).replace(/[^\d.]/g, "")) || 0;
 }
 
-function makeId(prefix) {
-  const time = Date.now().toString(36).toUpperCase().slice(-6);
-  const salt = Math.random().toString(36).slice(2, 4).toUpperCase();
-  return `${prefix}-${time}${salt}`;
-}
-
 /**
- * Fee for one booking. `rate` is $/day, `duration` is hours.
- * Under 24h is prorated; 24h+ is billed per started day (same rule the
- * old estimate used).
+ * Display estimate using the saved booking amount, or the hourly parking rate.
+ * Checkout always fetches an authoritative quote from the backend.
  */
-export function calculateFee({ rate, duration, promoCode = "" }) {
-  const perDayCents = Math.round(parseRate(rate) * 100);
+export function calculateFee({ rate, duration, totalAmount, promoCode = "" }) {
+  const perHourCents = Math.round(parseRate(rate) * 100);
   const hours = Number(duration) || 0;
-  const days = Math.ceil(hours / 24);
-  const baseCents = hours >= 24 ? perDayCents * days : Math.round((perDayCents * hours) / 24);
+  const baseCents = Number.isFinite(totalAmount) ? Math.round(totalAmount * 100) : perHourCents * Math.ceil(hours);
 
   const code = promoCode.trim().toUpperCase();
   const promoRate = PROMO_CODES[code] || 0;
@@ -59,9 +57,7 @@ export function calculateFee({ rate, duration, promoCode = "" }) {
   const taxCents = Math.round(taxableCents * TAX_RATE);
 
   return {
-    description: hours >= 24
-      ? `${days} ${days === 1 ? "day" : "days"} × ${formatMoney(perDayCents)}`
-      : `${hours} ${hours === 1 ? "hr" : "hrs"} at ${formatMoney(perDayCents)}/day`,
+    description: `${Math.ceil(hours)} billed hours`,
     baseCents,
     discountCents,
     promoCode: promoRate ? code : "",
@@ -101,52 +97,6 @@ export function validatePayment(method, values) {
   if (method === "netbanking" && !values.bank) errors.bank = "Choose your bank.";
   if (method === "wallet" && !values.wallet) errors.wallet = "Choose a wallet.";
   return errors;
-}
-
-/**
- * Simulated gateway. Replace the body with a call to your real provider
- * (Razorpay, Stripe, ...) — never send raw card numbers to your own server.
- * Test: any card ending 0002 (e.g. 4000 0000 0000 0002) is declined.
- */
-export function processPayment({ method, values }) {
-  return new Promise((resolve) => {
-    window.setTimeout(() => {
-      const digits = values.cardNumber.replace(/\s/g, "");
-      if (method === "card" && digits.endsWith("0002")) {
-        resolve({ ok: false, message: "Your card was declined. Try another card or payment method." });
-      } else {
-        resolve({ ok: true, transactionId: makeId("TXN") });
-      }
-    }, 1600);
-  });
-}
-
-function describeMethod(method, values) {
-  if (method === "upi") return `UPI · ${values.upiId.trim()}`;
-  if (method === "card") return `Card ending ${values.cardNumber.replace(/\s/g, "").slice(-4)}`;
-  if (method === "netbanking") return `Net banking · ${values.bank}`;
-  return `Wallet · ${values.wallet}`;
-}
-
-// Snapshots the booking so the receipt stays correct even if the booking changes later.
-export function createPayment({ booking, fee, method, values, transactionId }) {
-  return {
-    id: makeId("PAY"),
-    receiptNo: makeId("RCT"),
-    transactionId,
-    bookingId: booking.id,
-    spotId: booking.spotId,
-    location: booking.location,
-    vehicle: booking.vehicle,
-    date: booking.date,
-    time: booking.time,
-    duration: booking.duration,
-    fee,
-    amountCents: fee.totalCents,
-    method: describeMethod(method, values),
-    status: "paid", // "paid" | "refunded"
-    paidAt: Date.now(),
-  };
 }
 
 export function isBookingPaid(payments, bookingId) {

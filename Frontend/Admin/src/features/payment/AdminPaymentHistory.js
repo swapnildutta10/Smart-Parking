@@ -1,18 +1,10 @@
 import React from "react";
+import { subscribeToAvailability } from "../shared/availabilityEvents";
 
-const PAYMENT_STORAGE_KEY = "parknova-payment-history";
-
-function readPayments() {
-  try {
-    const payments = JSON.parse(localStorage.getItem(PAYMENT_STORAGE_KEY) || "[]");
-    return Array.isArray(payments) ? payments : [];
-  } catch {
-    return [];
-  }
-}
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 
 function formatMoney(cents) {
-  return `$${(Number(cents || 0) / 100).toFixed(2)}`;
+  return `₹${(Number(cents || 0) / 100).toFixed(2)}`;
 }
 
 function formatDateTime(timestamp) {
@@ -28,21 +20,44 @@ function formatDateTime(timestamp) {
     });
 }
 
-function AdminPaymentHistory() {
-  const [payments, setPayments] = React.useState(readPayments);
+function AdminPaymentHistory({ token, isMember }) {
+  const [payments, setPayments] = React.useState([]);
+  const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
   const [query, setQuery] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState("all");
 
   React.useEffect(() => {
-    function syncPayments(event) {
-      if (!event || event.key === PAYMENT_STORAGE_KEY || event.key === null) {
-        setPayments(readPayments());
+    setPayments([]); setError(""); setLoading(true);
+    if (isMember) { setLoading(false); return undefined; }
+    const controller = new AbortController();
+    let pending = false, queued = false;
+    async function load() {
+      if (controller.signal.aborted) return;
+      if (pending) { queued = true; return; }
+      pending = true;
+      try {
+        const response = await fetch(`${API_URL}/admin/payments`, {
+          headers: { Authorization: `Bearer ${token}` }, signal: controller.signal,
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Could not load payments.");
+        if (!controller.signal.aborted && !queued) { setPayments(result.payments); setError(""); }
+      } catch (err) { if (!controller.signal.aborted && !queued) setError(err.message); }
+      finally {
+        pending = false;
+        if (!controller.signal.aborted) {
+          setLoading(false);
+          if (queued) { queued = false; load(); }
+        }
       }
     }
-
-    window.addEventListener("storage", syncPayments);
-    return () => window.removeEventListener("storage", syncPayments);
-  }, []);
+    load();
+    const unsubscribe = subscribeToAvailability(load);
+    const timer = window.setInterval(load, 15000);
+    window.addEventListener("focus", load);
+    return () => { controller.abort(); unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", load); };
+  }, [token, isMember]);
 
   const searchTerm = query.trim().toLowerCase();
   const filteredPayments = payments.filter((payment) => {
@@ -64,7 +79,7 @@ function AdminPaymentHistory() {
   const paidPayments = payments.filter((payment) => payment.status === "paid");
   const refundedPayments = payments.filter((payment) => payment.status === "refunded");
   const netCollectedCents = payments.reduce((total, payment) => (
-    total + (payment.status === "paid" ? Number(payment.amountCents || 0) : -Number(payment.amountCents || 0))
+    total + (payment.status === "paid" ? Number(payment.amountCents || 0) : 0)
   ), 0);
 
   return (
@@ -78,8 +93,11 @@ function AdminPaymentHistory() {
       </div>
 
       <div className="pn-admin-payment-notice">
-        Payment details are demo records. The user and admin apps must share a browser origin for records to appear here.
+        Payment records are saved to your account. No money has been collected.
       </div>
+      {isMember && <p role="alert">Payment records are available to administrators only.</p>}
+      {loading && <p role="status">Loading payments…</p>}
+      {error && <p role="alert">{error}</p>}
 
       <div className="pn-admin-payment-summary" aria-label="Payment totals">
         <article>
@@ -91,7 +109,7 @@ function AdminPaymentHistory() {
           <strong>{refundedPayments.length}</strong>
         </article>
         <article>
-          <span>Net collected</span>
+          <span>Net amount</span>
           <strong>{formatMoney(netCollectedCents)}</strong>
         </article>
       </div>
@@ -159,7 +177,7 @@ function AdminPaymentHistory() {
               <tr>
                 <td className="pn-admin-bookings-empty" colSpan="7">
                   {payments.length === 0
-                    ? "No payment records are available on this browser origin yet."
+                    ? "No payment records are available yet."
                     : "No payments match this search."}
                 </td>
               </tr>

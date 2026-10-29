@@ -379,3 +379,11 @@
 .admin-success > p:not(.eyebrow) {
   color: #b6cbbd;
 }
+
+.pn-google-verification { margin: 12px 0; color: #4d6370; font-size: .85rem; text-align: center; }
+.pn-google-verification.is-verified { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; border: 1px solid #b3dec7; border-radius: 999px; color: #176b45; background: #eaf8f0; font-weight: 600; }
+
+.pn-google-preview-button { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 13px 18px; border: 1px solid #d5dce3; border-radius: 12px; background: #fff; color: #263340; font: inherit; font-weight: 600; cursor: pointer; }
+.pn-google-preview-button:hover { background: #f4f7fa; border-color: #aabac8; }
+.pn-google-preview-button:focus-visible { outline: 3px solid #4285f477; outline-offset: 3px; }
+.pn-google-preview-mark { color: #4285f4; font-size: 1.3rem; font-weight: 800; }

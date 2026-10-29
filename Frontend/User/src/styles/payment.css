@@ -52,7 +52,7 @@
 .pn-pay-promo-note.is-bad { color: var(--dashboard-coral, #ff8f77); }
 
 /* ---------- Method picker + fields ---------- */
-.pn-pay-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 18px 0 14px; }
+.pn-pay-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin: 18px 0 14px; }
 .pn-pay-methods button {
 	padding: 10px 4px; font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
 	color: var(--dashboard-muted, #b7b7c5); border: 1px solid var(--dashboard-line, #3b3c4b); border-radius: 10px; background: transparent;
@@ -77,7 +77,7 @@
 }
 .pn-pay-submit:hover:not(:disabled) { background: #83f7ff; }
 .pn-pay-submit:disabled, .pn-pay-close:disabled { opacity: 0.65; cursor: progress; }
-.pn-pay-demo-note { margin: 10px 0 0; text-align: center; font-size: 0.78rem; color: var(--dashboard-muted, #b7b7c5); }
+.pn-pay-note { margin: 10px 0 0; text-align: center; font-size: 0.78rem; color: var(--dashboard-muted, #b7b7c5); }
 .pn-pay-actions { display: flex; gap: 10px; margin-top: 18px; }
 .pn-pay-actions .pn-pay-submit { margin-top: 0; }
 .pn-pay-actions .pn-pay-secondary { flex: none; }
@@ -131,3 +131,133 @@
 }
 
 @media print { .pn-pay-backdrop { position: static; background: none; } }
+
+.pn-pay-method-picker { border: 0; padding: 0; margin: 18px 0 0; min-width: 0; }
+.pn-pay-method-picker legend { font-size: 0.9rem; font-weight: 600; }
+.pn-pay-method-picker .pn-pay-methods { margin-top: 10px; }
+
+/* Checkout refresh */
+.pn-pay-backdrop { backdrop-filter: blur(10px); }
+.pn-pay-card, .pn-pay-card * { box-sizing: border-box; }
+.pn-pay-checkout {
+  width: min(560px, 100%); padding: 30px; border-radius: 24px;
+  background: linear-gradient(150deg, #202936 0%, #151b26 55%, #171e2b 100%);
+  border-color: #354250; box-shadow: 0 32px 100px #0008;
+}
+.pn-pay-eyebrow { display: block; margin-bottom: 12px; color: #76ded9; font-size: .65rem; font-weight: 700; letter-spacing: .19em; }
+.pn-pay-checkout .pn-pay-head { margin-bottom: 24px; }
+.pn-pay-checkout .pn-pay-head h2 { font-size: clamp(1.4rem, 4.5vw, 1.8rem); letter-spacing: -.045em; margin-bottom: 8px; }
+.pn-pay-checkout .pn-pay-head p { line-height: 1.6; color: #a9b7c7; }
+.pn-pay-checkout .pn-pay-close { background: #ffffff08; border-color: #ffffff16; }
+.pn-pay-amount-banner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px; margin-bottom: 24px; border-radius: 18px; border: 1px solid #6ce5d52b; background: linear-gradient(115deg, #234140, #1c3037); }
+.pn-pay-amount-banner > div { display: grid; gap: 5px; }
+.pn-pay-amount-banner span { color: #bbd4d4; font-size: .8rem; }
+.pn-pay-amount-banner strong { font-size: 2.4rem; line-height: 1.2; color: #edfffc; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.pn-pay-amount-banner small { font-size: .7rem; color: #a5bfc1; }
+.pn-pay-amount-banner .pn-pay-spot { display: grid; gap: 6px; padding-left: 20px; border-left: 1px solid #ffffff20; text-align: center; }
+.pn-pay-spot small { font-size: .58rem; letter-spacing: .12em; }
+.pn-pay-spot b { font-size: 1.3rem; color: #b2f3d8; }
+.pn-pay-section-label { font-size: .8rem; font-weight: 600; margin-bottom: 10px; color: #e0e7ef; }
+.pn-pay-checkout .pn-pay-lines { background: #ffffff04; border: 1px solid #ffffff0d; border-radius: 14px; padding: 12px 16px; }
+.pn-pay-checkout .pn-pay-lines > div { font-size: .8rem; padding: 6px 0; }
+.pn-pay-checkout .pn-pay-lines b { flex-shrink: 0; }
+.pn-pay-checkout .pn-pay-lines .is-total { padding-top: 12px; margin-top: 8px; }
+.pn-pay-checkout .pn-pay-promo { padding: 4px; border: 1px dashed #526071; border-radius: 12px; }
+.pn-pay-checkout .pn-pay-promo input { border: 0; background: transparent; min-width: 0; font-size: .8rem; }
+.pn-pay-checkout .pn-pay-promo button { border: 0; border-radius: 8px; background: #67dbcb14; color: #90eadb; font-size: .8rem; }
+.pn-pay-checkout .pn-pay-method-picker { margin-top: 24px; }
+.pn-pay-checkout .pn-pay-methods { gap: 10px; }
+.pn-pay-checkout .pn-pay-methods button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 15px 12px; border-radius: 14px; background: #ffffff03; border-color: #ffffff19; }
+.pn-pay-checkout .pn-pay-methods button.active { border-color: #80e2d0; background: #80e2d00c; box-shadow: inset 0 0 0 1px #80e2d022; }
+.pn-pay-method-icon { display: grid; place-items: center; width: 32px; height: 36px; flex-shrink: 0; background: #ffffff08; border-radius: 9px; font-size: 1.4rem; color: #b4eee0; }
+.pn-pay-method-copy { display: grid; gap: 5px; flex: 1; }
+.pn-pay-method-copy strong { color: #edf5f7; font-size: .82rem; }
+.pn-pay-method-copy small { color: #9aaabd; font-size: .63rem; font-weight: 400; }
+.pn-pay-method-dot { width: 13px; height: 13px; border: 1px solid #687789; border-radius: 50%; flex-shrink: 0; }
+.active .pn-pay-method-dot { background: #8de3cf; border: 3px solid #213a38; outline: 1px solid #8de3cf; }
+.pn-pay-checkout .pn-pay-field { font-size: .76rem; gap: 8px; }
+.pn-pay-checkout .pn-pay-field input, .pn-pay-checkout .pn-pay-field select { padding: 14px; background: #101722; border-color: #354250; border-radius: 12px; font-size: .88rem; }
+.pn-pay-checkout .pn-pay-note { line-height: 1.6; font-size: .69rem; margin-top: 16px; color: #98a7b9; }
+.pn-pay-checkout .pn-pay-submit { padding: 16px; border-radius: 12px; background: #a8ebcf; color: #142e28; box-shadow: 0 6px 24px #82d9b514; }
+.pn-pay-checkout .pn-pay-submit:hover:not(:disabled) { background: #c2f7df; }
+.pn-pay-checkout button:focus-visible { outline: 2px solid #a8ebcf; outline-offset: 4px; }
+.pn-pay-checkout input[aria-invalid="true"], .pn-pay-checkout select[aria-invalid="true"] { border-color: #ff8f77; }
+@media (max-width: 480px) {
+  .pn-pay-checkout { padding: 20px; border-radius: 20px; }
+  .pn-pay-checkout .pn-pay-methods button { flex-wrap: wrap; gap: 8px; padding: 12px; }
+  .pn-pay-method-copy { min-width: 75px; }
+  .pn-pay-method-dot { margin-left: auto; }
+  .pn-pay-amount-banner { padding: 18px; }
+}
+
+/* UPI application choices */
+.pn-pay-upi-apps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 2px 0 6px; }
+.pn-pay-upi-app { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 4px 12px; border: 1px solid #ffffff19; border-radius: 14px; color: #b7c5d5; background: #ffffff03; font: inherit; font-size: .7rem; cursor: pointer; }
+.pn-pay-upi-app:hover:not(:disabled) { background: #ffffff09; border-color: #657788; }
+.pn-pay-upi-app.active { border-color: #80e2d0; background: #80e2d00c; color: #ecfff8; }
+.pn-pay-app-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--upi-app-color); color: #fff; font-size: 1.35rem; font-weight: 800; box-shadow: 0 4px 12px #0002; }
+.pn-pay-app-check { position: absolute; top: 5px; right: 7px; color: #a8ebcf; font-size: .7rem; }
+.pn-pay-upi-hint { margin: -4px 0 0; color: #98a7b9; font-size: .7rem; line-height: 1.5; }
+@media (max-width: 360px) { .pn-pay-upi-apps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Responsive web checkout: full-width phone flow and a two-column desktop form. */
+.pn-pay-backdrop { box-sizing: border-box; overscroll-behavior: contain; }
+.pn-pay-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.pn-pay-order, .pn-pay-selection, .pn-pay-checkout-footer { min-width: 0; }
+.pn-pay-checkout .pn-pay-method-picker { margin-top: 0; }
+.pn-pay-checkout .pn-pay-method-picker legend { margin-bottom: 2px; }
+.pn-pay-checkout .pn-pay-note { margin-top: 0; }
+.pn-pay-checkout .pn-pay-method-copy { min-width: 0; }
+.pn-pay-checkout .pn-pay-close { width: 44px; height: 44px; }
+.pn-pay-checkout .pn-pay-promo button { min-height: 44px; }
+.pn-pay-checkout .pn-pay-head p { overflow-wrap: anywhere; }
+.pn-pay-checkout-footer .pn-pay-submit { min-height: 50px; }
+@media (min-width: 900px) {
+  .pn-pay-checkout { width: min(980px, calc(100vw - 64px)); padding: 32px; border-radius: 18px; }
+  .pn-pay-checkout .pn-pay-head { padding-bottom: 24px; margin-bottom: 28px; border-bottom: 1px solid #ffffff12; }
+  .pn-pay-layout { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: 36px; row-gap: 24px; align-items: start; }
+  .pn-pay-order { grid-column: 1; grid-row: 1 / 3; padding-right: 28px; border-right: 1px solid #ffffff12; }
+  .pn-pay-selection { grid-column: 2; grid-row: 1; }
+  .pn-pay-checkout-footer { grid-column: 2; grid-row: 2; align-self: end; border-top: 1px solid #ffffff12; padding-top: 20px; }
+  .pn-pay-checkout .pn-pay-amount-banner { padding: 20px; border-radius: 12px; }
+  .pn-pay-checkout .pn-pay-methods { grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+  .pn-pay-checkout .pn-pay-methods button { padding: 14px; border-radius: 10px; }
+  .pn-pay-checkout .pn-pay-upi-apps { margin-bottom: 12px; }
+  .pn-pay-checkout .pn-pay-submit { margin-top: 14px; border-radius: 10px; }
+  .pn-pay-confirm { width: min(600px, calc(100vw - 64px)); padding: 36px; }
+  .pn-pay-receipt-wrap { width: min(640px, calc(100vw - 64px)); padding: 32px; }
+}
+@media (max-width: 599px) {
+  .pn-pay-backdrop { padding: 0; align-items: stretch; }
+  .pn-pay-card { width: 100%; max-height: 100vh; max-height: 100dvh; border-radius: 0; padding: 20px; }
+  .pn-pay-checkout { width: 100%; height: 100vh; height: 100dvh; max-height: 100vh; max-height: 100dvh; padding: max(20px, env(safe-area-inset-top)) 20px 0; border: 0; border-radius: 0; }
+  .pn-pay-checkout .pn-pay-head { margin-bottom: 20px; gap: 10px; }
+  .pn-pay-checkout .pn-pay-head h2 { font-size: 1.5rem; }
+  .pn-pay-checkout .pn-pay-head p { font-size: .75rem; }
+  .pn-pay-layout { gap: 22px; }
+  .pn-pay-checkout .pn-pay-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pn-pay-checkout .pn-pay-methods button { flex-wrap: nowrap; padding: 12px 10px; gap: 8px; min-height: 60px; }
+  .pn-pay-checkout .pn-pay-method-icon { width: 24px; height: 30px; font-size: 1.1rem; }
+  .pn-pay-checkout .pn-pay-method-copy strong { font-size: .75rem; }
+  .pn-pay-checkout .pn-pay-method-copy small { display: none; }
+  .pn-pay-checkout .pn-pay-method-dot { margin-left: 0; width: 11px; height: 11px; }
+  .pn-pay-checkout .pn-pay-field input, .pn-pay-checkout .pn-pay-field select,
+  .pn-pay-checkout .pn-pay-promo input { font-size: 16px; min-height: 48px; }
+  .pn-pay-checkout .pn-pay-upi-apps { gap: 8px; }
+  .pn-pay-checkout .pn-pay-upi-app { min-height: 90px; padding-top: 14px; }
+  .pn-pay-checkout-footer { position: sticky; bottom: 0; z-index: 2; padding: 16px 0 max(16px, env(safe-area-inset-bottom)); border-top: 1px solid #354250; background: #171e2b; box-shadow: 0 -12px 22px #171e2b; }
+  .pn-pay-checkout-footer .pn-pay-submit { margin-top: 12px; min-height: 52px; }
+  .pn-pay-card .pn-pay-actions { flex-wrap: wrap; padding-bottom: env(safe-area-inset-bottom); }
+  .pn-pay-card .pn-pay-actions button { flex: 1 1 100%; min-height: 48px; }
+  .pn-pay-confirm, .pn-pay-receipt-wrap { min-height: 100vh; min-height: 100dvh; padding-top: max(24px, env(safe-area-inset-top)); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  .pn-pay-confirm-meta dd, .pn-pay-paper-rows dd { min-width: 0; overflow-wrap: anywhere; }
+}
+@media (max-width: 359px) {
+  .pn-pay-checkout { padding-left: 14px; padding-right: 14px; }
+  .pn-pay-checkout .pn-pay-upi-apps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pn-pay-checkout .pn-pay-amount-banner { padding: 14px; }
+}
+@media print {
+  .pn-pay-backdrop, .pn-pay-card { height: auto; max-height: none; min-height: 0; overflow: visible; }
+}
+

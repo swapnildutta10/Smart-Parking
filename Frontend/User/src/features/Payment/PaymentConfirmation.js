@@ -13,9 +13,10 @@ function PaymentConfirmation({ payment, onViewReceipt, onClose }) {
     <div className="pn-pay-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <section className="pn-pay-card pn-pay-confirm" role="dialog" aria-modal="true" aria-labelledby="pn-pay-confirm-title">
         <span className="pn-pay-check" aria-hidden="true">✓</span>
-        <h2 id="pn-pay-confirm-title">Payment successful</h2>
+        <h2 id="pn-pay-confirm-title">{payment.isTest ? "Payment saved" : "Payment successful"}</h2>
         <p className="pn-pay-confirm-amount">{formatMoney(payment.amountCents)}</p>
-        <p>Your spot {payment.spotId} at {payment.location} is paid for.</p>
+        <p>Payment recorded for spot {payment.spotId} at {payment.location}.</p>
+        {payment.isTest && <p>No money was charged.</p>}
         <dl className="pn-pay-confirm-meta">
           <div><dt>Receipt no.</dt><dd>{payment.receiptNo}</dd></div>
           <div><dt>Transaction ID</dt><dd>{payment.transactionId}</dd></div>

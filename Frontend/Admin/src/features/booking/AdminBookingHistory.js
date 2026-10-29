@@ -16,7 +16,7 @@ function formatDate(dateString) {
   });
 }
 
-function AdminBookingHistory({ bookings, onStatusChange }) {
+function AdminBookingHistory({ bookings, loading, error, onStatusChange }) {
   const [query, setQuery] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [slotFilter, setSlotFilter] = React.useState("all");
@@ -57,8 +57,10 @@ function AdminBookingHistory({ bookings, onStatusChange }) {
       </div>
 
       <div className="pn-admin-booking-notice">
-        Demo records are shown here. Live user bookings are not connected to the admin app yet.
+        Bookings are loaded from your database. Status changes are saved to the account's booking history.
       </div>
+      {loading && <p role="status">Loading bookings…</p>}
+      {error && <p role="alert">{error}</p>}
 
       <BookingFilters
         query={query}

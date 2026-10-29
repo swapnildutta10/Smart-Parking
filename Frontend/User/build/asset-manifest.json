@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.db39386f.css",
+    "main.js": "/static/js/main.d0f09822.js",
+    "static/media/parknova-logo.svg": "/static/media/parknova-logo.7c15fcc287eb350dc3be48e7f5fcc87e.svg",
+    "index.html": "/index.html",
+    "main.db39386f.css.map": "/static/css/main.db39386f.css.map",
+    "main.d0f09822.js.map": "/static/js/main.d0f09822.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.db39386f.css",
+    "static/js/main.d0f09822.js"
+  ]
+}
