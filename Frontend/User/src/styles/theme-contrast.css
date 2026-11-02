@@ -8,11 +8,11 @@
   --text: var(--theme-ink); --ink: var(--theme-ink); --muted: var(--theme-muted);
   color: var(--theme-ink) !important;
 }
-:root:is([data-theme="dark"],[data-theme="light"]) :is(div,section,article,header,footer,nav,h1,h2,h3,h4,h5,h6,p,label,li,td,th,small,strong,b,em,a,button,input,select,textarea,legend,summary,caption,dt,dd,span,.text-secondary,.text-muted):not(.pn-chat *) {
+:root:is([data-theme="dark"],[data-theme="light"]) :is(div,section,article,header,footer,nav,h1,h2,h3,h4,h5,h6,p,label,li,td,th,small,strong,b,em,a,button,input,select,textarea,legend,summary,caption,dt,dd,span,.text-secondary,.text-muted):not(.pn-chat *):not(.pn-captcha):not(.pn-captcha *) {
   color: var(--theme-ink) !important;
 }
-:root:is([data-theme="dark"],[data-theme="light"]) :is(input,textarea):not(.pn-chat *)::placeholder { color: var(--theme-muted) !important; opacity: 1; }
-:root:is([data-theme="dark"],[data-theme="light"]) :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea):not(.pn-chat *) { background-color: var(--theme-field) !important; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(input,textarea):not(.pn-chat *):not(.pn-captcha *)::placeholder { color: var(--theme-muted) !important; opacity: 1; }
+:root:is([data-theme="dark"],[data-theme="light"]) :is(input:not([type="checkbox"]):not([type="radio"]),select,textarea):not(.pn-chat *):not(.pn-captcha *) { background-color: var(--theme-field) !important; }
 :root:is([data-theme="dark"],[data-theme="light"]) :is(.pn-pay-card,.pn-pay-checkout,.pn-login-form-wrap,.pn-user-panel,.pn-user-stat-card,.user-profile-details) { background-color: var(--theme-surface); border-color: var(--theme-line); }
 /* Filled action buttons and image badges need a contrasting white label in both modes. */
 :root:is([data-theme="dark"],[data-theme="light"]) :is(.booking-bar button,.hero-button,.nav-login,.pn-button-primary,.pn-user-primary-action,.pn-pay-submit,.pn-pay-action:not(.is-ghost),.home-parking-photo-label) {
