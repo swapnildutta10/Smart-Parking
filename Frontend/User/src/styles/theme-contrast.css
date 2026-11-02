@@ -8,7 +8,7 @@
   --text: var(--theme-ink); --ink: var(--theme-ink); --muted: var(--theme-muted);
   color: var(--theme-ink) !important;
 }
-:root:is([data-theme="dark"],[data-theme="light"]) :is(div,section,article,header,footer,nav,h1,h2,h3,h4,h5,h6,p,label,li,td,th,small,strong,b,em,a,button,input,select,textarea,legend,summary,caption,dt,dd,span,.text-secondary,.text-muted):not(.pn-chat *):not(.pn-captcha):not(.pn-captcha *) {
+:root:is([data-theme="dark"],[data-theme="light"]) :is(div,section,article,header,footer,nav,h1,h2,h3,h4,h5,h6,p,label,li,td,th,small,strong,b,em,a,button,input,select,textarea,legend,summary,caption,dt,dd,span,.text-secondary,.text-muted):not(.pn-chat *):not(.pn-captcha):not(.pn-captcha *):not(button):not(button *) {
   color: var(--theme-ink) !important;
 }
 :root:is([data-theme="dark"],[data-theme="light"]) :is(input,textarea):not(.pn-chat *):not(.pn-captcha *)::placeholder { color: var(--theme-muted) !important; opacity: 1; }
