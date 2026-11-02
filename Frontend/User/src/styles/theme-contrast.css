@@ -194,3 +194,17 @@
 :root[data-theme="light"] .pn-spot-modal .pn-availability-banner.is-full { background: #fcebed !important; border-color: #e6bbc3; color: #76192b !important; }
 :root[data-theme="light"] .pn-spot-modal .pn-availability-banner.is-full :is(span,strong,b,small) { color: #76192b !important; }
 :root:is([data-theme="dark"],[data-theme="light"]) .pn-spot-modal .pn-availability-dot { background: currentColor; }
+
+/* Keep foregrounds bright on the dark badges used by the light theme. */
+:root[data-theme="light"] .home-page .feature-icon,
+:root[data-theme="light"] .home-page .why-grid article > span,
+:root[data-theme="light"] .home-page .popular-plan > span {
+  color: #fff !important;
+  background: #19191c !important;
+}
+:root[data-theme="light"] :is(.pn-scope,.pn-user-dashboard) .pn-slot-card :is(.pn-slot-id,.pn-vehicle-tag),
+:root[data-theme="light"] .pn-user-dashboard .pn-user-dashboard-main :is(.pn-user-payment-icon,.pn-user-vehicle-icon,.pn-user-stat-icon) {
+  color: #fff !important;
+  background: #242428 !important;
+}
+:root[data-theme="light"] .pn-user-dashboard .pn-location-pin { color: #fff !important; background: #252529 !important; }
