@@ -4,6 +4,7 @@ import UserLogin from "../features/auth/UserLogin";
 import { authRequest } from "../features/auth/authApi";
 import UserDashboard from "../features/home/UserDashboard";
 import HomeHero from "../features/home/HomeHero";
+import HomeChatbot from "../features/home/HomeChatbot";
 import HomeParkingGallery from "../features/home/HomeParkingGallery";
 import ParkingDirectory from "../features/parkingSpot/ParkingDirectory";
 import { parkingRequest, bookingWindow } from "../features/parkingSpot/parkingApi";
@@ -441,6 +442,13 @@ function App() {
         </div>
       </footer>
       <div className="copyright">© 2026 ParkNova. All rights reserved.</div>
+      <HomeChatbot onNavigate={(destination) => {
+        if (destination === "account") {
+          navigateTo(authRole === "user" ? "userHome" : "user");
+        } else {
+          document.getElementById(destination)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }} />
     </main>
   );
 

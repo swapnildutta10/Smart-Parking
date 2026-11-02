@@ -4,12 +4,12 @@ import { authRequest } from "./authApi";
 import CaptchaChallenge from "./CaptchaChallenge";
 const STRENGTH_LABELS = ["NOT LOOKING", "TOO SHORT", "GETTING THERE", "STRONG", "FORT KNOX"];
 
-function UserLogin({ onGoToRegister, onLoginSuccess }) {
+function UserLogin({ onGoToRegister, onLoginSuccess, initialEmail = "" }) {
   const [previewAccount, setPreviewAccount] = React.useState({ name: "Alex Morgan", email: "alex.morgan@example.com", initials: "AM" });
   const [googleStatus, setGoogleStatus] = React.useState("idle");
   const [submitted, setSubmitted] = React.useState(false);
   const [remember, setRemember] = React.useState(false);
-  const [memberId, setMemberId] = React.useState("");
+  const [memberId, setMemberId] = React.useState(initialEmail);
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState("");
@@ -44,10 +44,11 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
   async function handleSubmit(event) {
     event.preventDefault();
     if (isSubmitting) return;
+    const fields = new FormData(event.currentTarget);
     setIsSubmitting(true);
     setError("");
     try {
-      const result = await authRequest("login", { email: memberId.trim(), password, captchaId: captcha.id, captchaAnswer: captcha.answer });
+      const result = await authRequest("login", { email: String(fields.get("email") || "").trim(), password: String(fields.get("password") || ""), captchaId: captcha.id, captchaAnswer: captcha.answer });
       localStorage.setItem("parknova-auth-token", result.token);
       setError("");
       finishLogin(() => onLoginSuccess?.(result.user));
@@ -221,6 +222,7 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                   <input
                     required
                     placeholder="you@example.com"
+                      name="email"
                     type="email"
                     value={memberId}
                     autoComplete="username"
@@ -241,6 +243,7 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                       minLength="8"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      name="password"
                       value={password}
                       autoComplete="current-password"
                       aria-invalid={Boolean(error)}
@@ -304,7 +307,7 @@ function UserLogin({ onGoToRegister, onLoginSuccess }) {
                 <button
                   className="pn-button-primary"
                   type="submit"
-                  disabled={isSubmitting || !captcha.id || captcha.answer.trim().length !== 5}
+                  disabled={isSubmitting || !captcha.id || !captcha.answer}
                   onPointerDown={() => {
                     setRobotMood("pressed");
                     say("Beep. Do that again.");

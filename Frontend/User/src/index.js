@@ -9,6 +9,7 @@ import './styles/motorsport-theme.css';
 import './styles/light-theme.css';
 import './styles/theme-contrast.css';
 import './styles/site-rhythm.css';
+import './styles/home-chatbot.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
