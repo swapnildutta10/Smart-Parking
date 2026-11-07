@@ -1,6 +1,20 @@
-# Smart-Parking · ParkNova
+<div align="center">
 
-A full-stack parking reservation application with separate driver and administrator portals. Drivers can find parking, check capacity for their arrival time, reserve a space, and manage their bookings. Administrators manage locations, inventory, reservations, support requests, and reports.
+<img src="Frontend/User/src/features/shared/parknova-logo.svg" alt="ParkNova — Park smart. Move freely." width="300">
+
+<h1>Smart Parking, made simple</h1>
+<p><strong>Find a space. Book ahead. Arrive without the search.</strong></p>
+
+<img alt="React 19" src="https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white">
+<img alt="Node.js 20+" src="https://img.shields.io/badge/Node.js-20%2B-339933?logo=nodedotjs&logoColor=white">
+<a href="https://github.com/swapnildutta10/Smart-Parking/commits/main"><img alt="Latest commit" src="https://img.shields.io/github/last-commit/swapnildutta10/Smart-Parking?label=updated"></a>
+<a href="https://github.com/swapnildutta10/Smart-Parking"><img alt="Top language" src="https://img.shields.io/github/languages/top/swapnildutta10/Smart-Parking"></a>
+
+<p><a href="#features">Features</a> · <a href="#architecture">Architecture</a> · <a href="#installation">Installation</a> · <a href="#run-locally">Run locally</a> · <a href="#build-and-checks">Build and checks</a></p>
+
+</div>
+
+ParkNova is a full-stack parking reservation application with separate driver and administrator portals. Drivers can find parking, check capacity for their arrival time, reserve a space, and manage bookings. Administrators manage locations, inventory, reservations, support requests, and reports.
 
 ## Features
 
@@ -34,6 +48,19 @@ A full-stack parking reservation application with separate driver and administra
 - **Backend:** Node.js, Express 5, Mongoose, MongoDB, SVG CAPTCHA.
 - **Authentication:** signed session tokens and scrypt password hashing for user accounts.
 - **Live updates:** server-sent events (SSE).
+
+## Architecture
+
+```mermaid
+flowchart LR
+  Driver[Driver] --> UserApp[React driver portal]
+  Admin[Administrator] --> AdminApp[React admin portal]
+  UserApp --> API[Express API]
+  AdminApp --> API
+  API --> DB[(MongoDB)]
+  API -. live availability and booking events .-> UserApp
+  API -. booking and payment updates .-> AdminApp
+```
 
 ## Project structure
 
