@@ -26,6 +26,28 @@ function App() {
     () => localStorage.getItem("parkly-theme") !== "light",
   );
   const [themeAnimating, setThemeAnimating] = React.useState(false);
+  React.useEffect(() => {
+    if (started || authView) return undefined;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const targets = document.querySelectorAll(
+      ".home-page > section:not(.home-hero), .home-page .feature-strip article, .home-page .why-grid article, .home-page .quote-grid article, .home-page .pricing-grid article",
+    );
+    if (reduceMotion || !("IntersectionObserver" in window)) return undefined;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-scroll-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
+
+    targets.forEach((target) => {
+      target.classList.add("has-scroll-motion");
+      observer.observe(target);
+    });
+    return () => observer.disconnect();
+  }, [started, authView]);
   const [bookings, setBookings] = React.useState([]);
   const [bookingsError, setBookingsError] = React.useState("");
   const [bookingsLoading, setBookingsLoading] = React.useState(false);
@@ -446,7 +468,8 @@ function App() {
         if (destination === "account") {
           navigateTo(authRole === "user" ? "userHome" : "user");
         } else {
-          document.getElementById(destination)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+          document.getElementById(destination)?.scrollIntoView({ behavior, block: "start" });
         }
       }} />
     </main>

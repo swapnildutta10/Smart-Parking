@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.0d2d372e.css",
-    "main.js": "/static/js/main.7114c3ac.js",
+    "main.css": "/static/css/main.776304b8.css",
+    "main.js": "/static/js/main.621dd33b.js",
     "static/media/parknova-logo.svg": "/static/media/parknova-logo.7c15fcc287eb350dc3be48e7f5fcc87e.svg",
     "index.html": "/index.html",
-    "main.0d2d372e.css.map": "/static/css/main.0d2d372e.css.map",
-    "main.7114c3ac.js.map": "/static/js/main.7114c3ac.js.map"
+    "main.776304b8.css.map": "/static/css/main.776304b8.css.map",
+    "main.621dd33b.js.map": "/static/js/main.621dd33b.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d2d372e.css",
-    "static/js/main.7114c3ac.js"
+    "static/css/main.776304b8.css",
+    "static/js/main.621dd33b.js"
   ]
 }
