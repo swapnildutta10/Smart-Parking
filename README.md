@@ -55,27 +55,3 @@ npm --prefix Frontend ci
 npm --prefix Frontend/User ci
 npm --prefix Frontend/Admin ci
 ```
-
-Configure local environment files:
-
-| File | Required settings |
-| --- | --- |
-| `Backend/.env` | `MONGO_URI`, `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` |
-| `Frontend/User/.env` | `REACT_APP_API_URL=http://localhost:5000/api` |
-| `Frontend/Admin/.env` | `REACT_APP_API_URL`, `REACT_APP_USER_SITE_URL` |
-
-Keep secrets in `Backend/.env`. Frontend environment values are public in the browser bundle.
-
-## Run locally
-
-Start these commands in separate terminals from the repository root:
-
-| Service | Command | URL |
-| --- | --- | --- |
-| API | `npm --prefix Backend start` | `http://localhost:5000/health` |
-| Driver portal | `npm --prefix Frontend/User start` | `http://localhost:3000` |
-| Admin portal | `npm --prefix Frontend/Admin start` | `http://localhost:3001` |
-
-> **Payment note:** checkout is simulated for testing. No payment gateway is connected and no funds are transferred. Availability reflects reservation capacity, not physical sensors.
-
-For build and API integration-check commands, see [Frontend/server/README.md](Frontend/server/README.md).
